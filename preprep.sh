@@ -22,11 +22,10 @@ clear;
 
 
 function fullyAutomaticShotgun {
-  echo "complete";
+  installGit;
+  preproutine;
+  echo "Bang!";
 }
-
-
-
 
 function setNewtColors {
   ##         set ncurses/newt/whiptail colors             ##
@@ -45,7 +44,6 @@ function resetNewtColors {
   #                                                        #
   ##                                                      ##
 }
-
 
 function installGit {
   clear;
@@ -96,23 +94,17 @@ function preproutine {
 }
 
 function customizeShotgun {
-  whiptail --title "Preprep Setup" --checklist --separate-output "Check Options: (arrows/space/tab/enter)" 10 50 3 \
+  whiptail --title "Preprep Setup" --checklist --separate-output "Check Options: (arrows/space/tab/enter)" 10 50 2 \
       "Git" "Install Git " off \
       "Preprep" "Run Preprep " off \
-  #    "DarkTheme" "Set newt palette colors" off \
-  #    "OriginalTheme" "Reset newt palette colors" off \
     2>results
 
   while read choice
   do
           case $choice in
-                  DarkTheme) setNewtColors
-                  ;;
                   Git) installGit
                   ;;
                   Preprep) preproutine
-                  ;;
-                  OriginalTheme) resetNewtColors
                   ;;
                   *)
                   ;;
