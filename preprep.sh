@@ -25,14 +25,6 @@ function fullyAutomaticShotgun {
   echo "complete";
 }
 
-if (whiptail --title "Auto / Custom" --yesno "Yes To Pull The Trigger / Customize Options" --yes-button "Auto" --no-button "Custom" 8 78) then
-    echo "fully automatic shotgun engaged!...";
-    echo "please wait...";
-    fullyAutomaticShotgun;
-else
-  # the rest of this file...
-
-
 
 
 
@@ -103,29 +95,40 @@ function preproutine {
   echo "  bmenu -c ~/gitstuff/preprep/.bmenu "
 }
 
-whiptail --title "Preprep Setup" --checklist --separate-output "Check Options: (arrows/space/tab/enter)" 10 50 3 \
-    "Git" "Install Git " off \
-    "Preprep" "Run Preprep " off \
-#    "DarkTheme" "Set newt palette colors" off \
-#    "OriginalTheme" "Reset newt palette colors" off \
-  2>results
+function customizeShotgun {
+  whiptail --title "Preprep Setup" --checklist --separate-output "Check Options: (arrows/space/tab/enter)" 10 50 3 \
+      "Git" "Install Git " off \
+      "Preprep" "Run Preprep " off \
+  #    "DarkTheme" "Set newt palette colors" off \
+  #    "OriginalTheme" "Reset newt palette colors" off \
+    2>results
 
-while read choice
-do
-        case $choice in
-                DarkTheme) setNewtColors
-                ;;
-                Git) installGit
-                ;;
-                Preprep) preproutine
-                ;;
-                OriginalTheme) resetNewtColors
-                ;;
-                *)
-                ;;
-        esac
-done < results
+  while read choice
+  do
+          case $choice in
+                  DarkTheme) setNewtColors
+                  ;;
+                  Git) installGit
+                  ;;
+                  Preprep) preproutine
+                  ;;
+                  OriginalTheme) resetNewtColors
+                  ;;
+                  *)
+                  ;;
+          esac
+  done < results
 
-echo "Preprep has closed.";
+  echo "Preprep has closed.";
+}
 
+
+##### If Statement Below This Line Kicks Off The Whole Shebang! #####
+
+if (whiptail --title "Auto / Custom" --yesno "Yes To Pull The Trigger / Customize Options" --yes-button "Auto" --no-button "Custom" 8 78) then
+  echo "fully automatic shotgun engaged!...";
+  echo "please wait...";
+  fullyAutomaticShotgun;
+else
+  customizeShotgun;
 fi;
