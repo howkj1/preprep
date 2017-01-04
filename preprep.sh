@@ -13,39 +13,49 @@
 ### this block installs git until script is updated to check if git is installed
 echo;echo -ne "checking for updates... \r";
 sudo apt-get -qq update > /dev/null  2>&1; wait;
+echo -ne "...                                 \r";
 echo -ne "installing git... \r";
 sudo apt-get -qq install git; wait;
 ###
 
+##         set ncurses/newt/whiptail colors             ##
+# locates color config file and replaces text inline     #
+sudo sed -i 's/magenta/grey/g' /etc/newt/palette.ubuntu
+#                                                        #
+##                                                      ##
+
 ### Stuff below this line should be converted to whiptail or other clui ###
 
-
-echo -ne "make gitstuff folder \r";sleep 1;
+echo -ne "...                                 \r";
+echo -ne "making gitstuff folder... \r";sleep 1;
 [ ! -d ~/gitstuff ] && mkdir ~/gitstuff;
 
 
 ########
-echo -ne "open gitstuff folder \r"; sleep 1;
+echo -ne "opening gitstuff folder... \r"; sleep 1;
 cd ~/gitstuff;
 
-echo -ne "git clone bmenu repo \r"; sleep 1;
+echo -ne "...                                 \r";
+echo -ne "installing bmenu... \r"; sleep 1;
 [ ! -d ~/gitstuff/bmenu ] && git clone https://github.com/bartobri/bmenu.git;wait;
 
-echo -ne "open bmenu/src/ \r"; sleep 1;
+echo -ne "locating bmenu src... \r"; sleep 1;
 cd ~/gitstuff/bmenu/src/;
-echo -ne "build bmenu app \r"; sleep 1;
+echo -ne "building bmenu app... \r"; sleep 1;
 make; wait;
-echo -ne "install bmenu \r"; sleep 1;
+echo -ne "...                                 \r";
+echo -ne "installing bmenu... \r"; sleep 1;
 sudo cp ./bmenu /usr/bin/;
-echo -ne "bmenu installed \r";sleep 1;
+echo -ne "...                                 \r";
+echo -ne "bmenu installed! \r";sleep 1;
 ########
 
 echo;echo -ne 'here we go... \r'
-sleep 1
+sleep .5
 echo -ne 'here we go... ... \r'
-sleep 1
+sleep .5
 echo -ne 'here we go... ... ... \r'
-sleep 1
+sleep .5
 echo -ne 'here we go... ... ... ...\r'
 echo -ne '\n'
 

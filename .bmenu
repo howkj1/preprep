@@ -1,4 +1,4 @@
-Super Mac Fu Installer:bmenu -c ~/gitstuff/macfu/macfu
+Super Mac Fu Installer:bmenu -c ~/gitstuff/preprep/macfu/macfu
 Rock On:echo "Rock Hero!"
 
 Clear Screen:clear
