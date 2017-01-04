@@ -10,32 +10,34 @@
 # http://tecadmin.net/bash-shell-test-if-file-or-directory-exists/#
 #
 
-### this block is optional until script is updated to check if git is installed
-echo;echo "apt-get update"; sleep 2;
-sudo apt-get -qq update; wait;
-echo;echo "install git";echo; sleep 2;
+### this block installs git until script is updated to check if git is installed
+echo;echo -ne "checking for updates... \r";
+sudo apt-get -qq update > /dev/null  2>&1; wait;
+echo -ne "installing git... \r";
 sudo apt-get -qq install git; wait;
 ###
 
+### Stuff below this line should be converted to whiptail or other clui ###
 
-echo "make gitstuff folder";echo; sleep 2;
+
+echo -ne "make gitstuff folder \r";sleep 1;
 [ ! -d ~/gitstuff ] && mkdir ~/gitstuff;
 
 
 ########
-echo "open gitstuff folder";echo; sleep 2;
+echo -ne "open gitstuff folder \r"; sleep 1;
 cd ~/gitstuff;
 
-echo "git clone bmenu repo";echo; sleep 2;
+echo -ne "git clone bmenu repo \r"; sleep 1;
 [ ! -d ~/gitstuff/bmenu ] && git clone https://github.com/bartobri/bmenu.git;wait;
 
-echo "open bmenu/src/";echo; sleep 2;
+echo -ne "open bmenu/src/ \r"; sleep 1;
 cd ~/gitstuff/bmenu/src/;
-echo "build bmenu app";echo; sleep 2;
+echo -ne "build bmenu app \r"; sleep 1;
 make; wait;
-echo "install bmenu";echo; sleep 2;
+echo -ne "install bmenu \r"; sleep 1;
 sudo cp ./bmenu /usr/bin/;
-echo "bmenu installed";sleep 1;
+echo -ne "bmenu installed \r";sleep 1;
 ########
 
 echo;echo -ne 'here we go... \r'
