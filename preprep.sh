@@ -27,6 +27,16 @@ function setNewtColors {
   ##                                                      ##
 }
 
+function resetNewtColors {
+  ##         set ncurses/newt/whiptail colors             ##
+  # locates color config file and replaces text inline     #
+  echo -ne "setting up newt colors... \r";
+  sudo sed -i 's/grey/magenta/g' /etc/newt/palette.ubuntu ;
+  #                                                        #
+  ##                                                      ##
+}
+
+
 function installGit {
   clear;
   ### this block installs git until script is updated to check if git is installed
@@ -76,9 +86,11 @@ function preproutine {
 }
 
 whiptail --title "Preprep Setup" --checklist --separate-output "Check Options: (arrows/space/tab/enter)" 10 50 3 \
-"Git" "Install Git" off \
-"Preprep" "Run Preprep" off \
-"DarkTheme" "Set newt palette colors" off 2>results
+    "Git" "Install Git " off \
+    "Preprep" "Run Preprep " off \
+#    "DarkTheme" "Set newt palette colors" off \
+#    "OriginalTheme" "Reset newt palette colors" off \
+  2>results
 
 while read choice
 do
@@ -88,6 +100,8 @@ do
                 Git) installGit
                 ;;
                 Preprep) preproutine
+                ;;
+                OriginalTheme) resetNewtColors
                 ;;
                 *)
                 ;;
