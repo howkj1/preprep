@@ -9,6 +9,8 @@
 # test files and directories
 # http://tecadmin.net/bash-shell-test-if-file-or-directory-exists/#
 #
+# whiptail
+# https://en.wikibooks.org/wiki/Bash_Shell_Scripting/Whiptail
 
 ### Stuff below this line should be converted to whiptail or other clui ###
 
@@ -17,6 +19,22 @@ clear;
 
 
 ## begin magical code land ##
+
+
+function fullyAutomaticShotgun {
+  echo "complete";
+}
+
+if (whiptail --title "Auto / Custom" --yesno "Yes To Pull The Trigger / Customize Options" --yes-button "Auto" --no-button "Custom" 8 78) then
+    echo "fully automatic shotgun engaged!...";
+    echo "please wait...";
+    fullyAutomaticShotgun;
+else
+  # the rest of this file...
+
+
+
+
 
 function setNewtColors {
   ##         set ncurses/newt/whiptail colors             ##
@@ -109,3 +127,5 @@ do
 done < results
 
 echo "Preprep has closed.";
+
+fi;
