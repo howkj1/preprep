@@ -48,3 +48,5 @@ echo -ne 'here we go... ... ... \r'
 sleep 1
 echo -ne 'here we go... ... ... ...\r'
 echo -ne '\n'
+
+bmenu -c ~/gitstuff/preprep/.bmenu

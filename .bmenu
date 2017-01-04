@@ -1,0 +1,5 @@
+Super Mac Fu Installer:bmenu -c ~/gitstuff/macfu/macfu
+Rock On:echo "Rock Hero!"
+
+Clear Screen:clear
+Dir Listing:ls -l
