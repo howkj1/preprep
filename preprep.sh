@@ -31,11 +31,6 @@ clear;
 # installGit / preproutine / installbmenu
 # fullyAutomaticShotgun / customizeShotgun
 
-## macify.sh ##
-. ./macify.sh --source-only
-#
-#
-
 #### end of imports ####
 
 
@@ -45,7 +40,8 @@ function setscriptperms {
   [ -f ./macify.sh ] && chmod +x ./macify.sh;
 }
 
-setscriptperms;
+## only run this function if import complains
+# setscriptperms;
 
 ##### If Statement Below This Line Kicks Off The Whole Shebang! #####
 

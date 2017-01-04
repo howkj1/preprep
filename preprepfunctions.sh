@@ -14,8 +14,9 @@
 ## macify.sh ##
 . ./macify.sh --source-only
 #
-#
+# 
 
+#### end of imports ####
 
 function installGit {
   clear;
