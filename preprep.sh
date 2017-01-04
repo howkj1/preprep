@@ -97,7 +97,7 @@ function customizeShotgun {
   whiptail --title "Preprep Setup" --checklist --separate-output "Check Options: (arrows/space/tab/enter)" 10 50 2 \
       "Git" "Install Git " off \
       "Preprep" "Run Preprep " off \
-    2>results
+    2>lastrun
 
   while read choice
   do
@@ -109,7 +109,7 @@ function customizeShotgun {
                   *)
                   ;;
           esac
-  done < results
+  done < lastrun
 
   echo "Preprep has closed.";
 }
