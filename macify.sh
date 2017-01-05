@@ -13,16 +13,16 @@
 ## begin magical code land ##
 
 function install_ppa {
-  sudo add-apt-repository ppa:noobslab/macbuntu;
-  sudo add-apt-repository ppa:noobslab/themes;
+  sudo add-apt-repository -y ppa:noobslab/macbuntu;
+  sudo add-apt-repository -y ppa:noobslab/themes;
   sudo apt-get update;
 }
 
 function install_wallpapers {
-  #2015
-  wget -P ~/Pictures http://drive.noobslab.com/data/Mac-14.10/MBuntu-Wallpapers.zip ;
-  unzip ~/Pictures/MBuntu-Wallpapers.zip -d ~/Pictures;
-  rm ~/Pictures/MBuntu-Wallpapers.zip;
+  # #2015
+  # wget -P ~/Pictures http://drive.noobslab.com/data/Mac-14.10/MBuntu-Wallpapers.zip ;
+  # unzip ~/Pictures/MBuntu-Wallpapers.zip -d ~/Pictures;
+  # rm ~/Pictures/MBuntu-Wallpapers.zip;
 
   #2016
   wget -P ~/Pictures http://drive.noobslab.com/data/Mac/MacBuntu-Wallpapers.zip ;
@@ -31,11 +31,11 @@ function install_wallpapers {
 }
 
 function install_macbuntuTheme {
-  sudo apt-get install macbuntu-os-ithemes-lts-v7;
+  sudo apt-get -y install macbuntu-os-ithemes-lts-v7;
 }
 
 function install_icons {
-  sudo apt-get install macbuntu-os-icons-lts-v7;
+  sudo apt-get -y install macbuntu-os-icons-lts-v7;
 }
 
 # function install_cursors {
@@ -43,16 +43,16 @@ function install_icons {
 # }
 
 function install_launchpad {
-  sudo apt-get install slingscold;
+  sudo apt-get -y install slingscold;
 }
 
 function install_spotlight {
-  sudo apt-get install albert;
+  sudo apt-get -y install albert;
 }
 
 function install_dock {
-  sudo apt-get install plank;
-  sudo apt-get install macbuntu-os-plank-theme-lts-v7;
+  sudo apt-get -y install plank;
+  sudo apt-get -y install macbuntu-os-plank-theme-lts-v7;
 }
 
 function install_applemenu {
@@ -72,12 +72,12 @@ function install_applelogolauncher {
 }
 
 function install_tools {
-  sudo apt-get install unity-tweak-tool;
-  sudo apt-get install gnome-tweak-tool;
+  sudo apt-get -y install unity-tweak-tool;
+  sudo apt-get -y install gnome-tweak-tool;
 }
 
 function install_librefonts {
-  sudo apt-get install libreoffice-style-sifr;
+  sudo apt-get -y install libreoffice-style-sifr;
   # After installation go to LibreOffice menu
   # select "Tools" > "Options" > "LibreOffice" > "View"
   # and select "Sifr" under "Icon size and style".
@@ -96,6 +96,15 @@ function install_macfonts {
   echo "Unity-Tweak-Tool, Gnome-Tweak-Tool or Ubuntu Tweak";
 }
 
+function set_macthemes {
+  # gtk-theme
+  gsettings set org.gnome.desktop.interface gtk-theme "MacBuntu-OS-UCGM";
+  # icon-theme
+  gsettings set org.gnome.desktop.interface icon-theme "MacBuntu-OS";
+  # window-theme
+  gsettings set org.gnome.desktop.wm.preferences theme "MacBuntu-OS-UCGM";
+}
+
 function install_allmacstuff {
   install_ppa;
   install_wallpapers;
@@ -105,11 +114,13 @@ function install_allmacstuff {
   install_launchpad;
   install_spotlight;
   install_dock;
-  install_applemenu;
+  # install_applemenu;
   install_applelogolauncher;
   install_tools;
   install_librefonts;
   install_macfonts;
+  set_macthemes;
+  echo "";
   echo "all the mac stuffs!";
   echo "shiny.";
 }

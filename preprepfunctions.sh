@@ -38,7 +38,7 @@ function installGit {
   sudo apt-get -qq update > /dev/null  2>&1; wait;
   echo -ne "...                                 \r";
   echo -ne "installing git... \r";
-  sudo apt-get -qq install git; wait;
+  sudo apt-get -qq -y install git; wait;
   echo -ne "git installed!      \r";
   ###
 }
