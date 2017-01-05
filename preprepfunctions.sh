@@ -37,6 +37,7 @@ function installGit {
 function fix_locale {
   # fixes: vagrant boxcutter/ubuntu1604-desktop
   # failure to load gnome-terminal
+  # http://askubuntu.com/questions/765580/ubuntu-16-04-live-usb-gnome-terminal-not-opening-by-any-means
   sudo locale-gen "en_US.UTF-8";
   sudo localectl set-locale LANG="en_US.UTF-8";
   #sudo shutdown -r now;
@@ -73,31 +74,52 @@ function installbmenu {
   # echo "  bmenu -c ~/gitstuff/preprep/.bmenu "
 }
 
+function set_wallpaper_matrix {
+  # set wallpaper to Matrix
+  echo "";
+  echo -en "downloading matrix wallpaper\r";
+  wget -P ~/Pictures/ -O matrix.jpg http://cdn.wonderfulengineering.com/wp-content/uploads/2014/04/code-wallpaper-16.jpg;
+  [ -f ~/Pictures/matrix.jpg ] && gsettings set org.gnome.desktop.background picture-uri file://~/Pictures/matrix.jpg;
+  echo "wallpaper set to: Matrix          ";
+}
+
+function set_wallpaper_mac {
+  # set wallpaper to Matrix
+  echo "";
+  [ -f ~/Pictures/mbuntu-3.jpg ] && gsettings set org.gnome.desktop.background picture-uri file://~/Pictures/mbuntu-3.jpg;
+  echo "wallpaper set to: mac";
+}
+
 function preproutine {
+  echo;
+  echo -ne "starting preproutine... \r";
+  echo -ne 'here we go... \r';
+  sleep .5;
+  echo -ne 'here we go... ... \r';
+  sleep .5;
+  echo -ne 'here we go... ... ... \r';
+  sleep .5;
+  echo -ne 'here we go... ... ... ...\r';
+  echo -ne '\n';
+
   gitstuffdir;wait;
   installbmenu;wait;
+  set_wallpaper_matrix; # NOTE this sets wallpaper and should be a choice of which wallpaper
 # macify functions go here ________ !
 
-  echo;echo -ne 'here we go... \r'
-  sleep .5
-  echo -ne 'here we go... ... \r'
-  sleep .5
-  echo -ne 'here we go... ... ... \r'
-  sleep .5
-  echo -ne 'here we go... ... ... ...\r'
-  echo -ne '\n'
-
-  echo "Preprep has finished!"
+  echo;
+  echo "Preprep has finished!";
 }
 
 function fullyAutomaticShotgun {
   # installGit; #comes standard on ubuntu1604-desktop ?
-  fix_locale; #this should be updated as a config choice for vagrant vs hardware
+  fix_locale; # NOTE this should be updated as a config choice for vagrant vs hardware
   preproutine;
   install_allmacstuff;
   echo "Bang!";
 }
 
+# TODO extend checklist to include more of the newly added functions
 function customizeShotgun {
   whiptail --title "Preprep Setup" --checklist --separate-output "Check Options: (arrows/space/tab/enter)" 10 50 2 \
       "Git" "Install Git " off \

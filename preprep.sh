@@ -45,7 +45,7 @@ function setscriptperms {
 
 
 ##### If Statement Below This Line Kicks Off The Whole Shebang! #####
-
+# TODO change this to menus?
 if (whiptail --title "Auto / Custom" --yesno "Yes To Pull The Trigger / Customize Options" --yes-button "Auto" --no-button "Custom" 8 78) then
   echo "fully automatic shotgun engaged!...";
   echo "please wait...";
