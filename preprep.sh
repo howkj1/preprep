@@ -29,6 +29,7 @@ clear;
 ## preprepfunctions.sh: ##
 . ./preprepfunctions.sh --source-only
 # installGit / preproutine / installbmenu
+# fix_locale
 # fullyAutomaticShotgun / customizeShotgun
 
 #### end of imports ####
@@ -39,9 +40,9 @@ function setscriptperms {
   [ -f ./preprepfunctions.sh ] && chmod +x ./preprepfunctions.sh;
   [ -f ./macify.sh ] && chmod +x ./macify.sh;
 }
-
 ## only run this function if import complains
 # setscriptperms;
+
 
 ##### If Statement Below This Line Kicks Off The Whole Shebang! #####
 

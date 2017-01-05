@@ -14,21 +14,12 @@
 ## macify.sh ##
 . ./macify.sh --source-only
 #
-# install_ppa;
-# install_wallpapers;
-# install_macbuntuTheme;
-# install_icons;
-# install_cursors;
-# install_launchpad;
-# install_spotlight;
-# install_dock;
-# install_applemenu;
-# install_applelogolauncher;
-# install_tools;
-# install_librefonts;
-# install_macfonts;
-# install_allmacstuff;
-
+# install_ppa; / install_wallpapers; / install_macbuntuTheme;
+# install_icons; / install_cursors; / install_launchpad;
+# install_spotlight; / install_dock; / install_applemenu;
+# install_applelogolauncher; / install_tools; / install_librefonts;
+# install_macfonts; / install_allmacstuff;
+## end of macify.sh ##
 #### end of imports ####
 
 function installGit {
@@ -41,6 +32,14 @@ function installGit {
   sudo apt-get -qq -y install git; wait;
   echo -ne "git installed!      \r";
   ###
+}
+
+function fix_locale {
+  # fixes: vagrant boxcutter/ubuntu1604-desktop
+  # failure to load gnome-terminal
+  sudo locale-gen "en_US.UTF-8";
+  sudo localectl set-locale LANG="en_US.UTF-8";
+  #sudo shutdown -r now;
 }
 
 function gitstuffdir {
@@ -92,7 +91,8 @@ function preproutine {
 }
 
 function fullyAutomaticShotgun {
-  installGit;
+  # installGit; #comes standard on ubuntu1604-desktop ?
+  fix_locale; #this should be updated as a config choice for vagrant vs hardware
   preproutine;
   install_allmacstuff;
   echo "Bang!";
