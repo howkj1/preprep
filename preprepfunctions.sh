@@ -14,7 +14,20 @@
 ## macify.sh ##
 . ./macify.sh --source-only
 #
-# 
+# install_ppa;
+# install_wallpapers;
+# install_macbuntuTheme;
+# install_icons;
+# install_cursors;
+# install_launchpad;
+# install_spotlight;
+# install_dock;
+# install_applemenu;
+# install_applelogolauncher;
+# install_tools;
+# install_librefonts;
+# install_macfonts;
+# install_allmacstuff;
 
 #### end of imports ####
 
@@ -43,6 +56,7 @@ function gitstuffdir {
 # this could be modified to strictly use whiptail instead
 # but I like bmenu and want it available, so here it is.
 function installbmenu {
+  [ ! -d ~/gitstuff ] && gitstuffdir; #might be overkill?
   echo -ne "...                                 \r";
   echo -ne "installing bmenu... \r"; sleep 1;
   [ ! -d ~/gitstuff/bmenu ] && git clone https://github.com/bartobri/bmenu.git;wait;
@@ -63,6 +77,7 @@ function installbmenu {
 function preproutine {
   gitstuffdir;wait;
   installbmenu;wait;
+# macify functions go here ________ !
 
   echo;echo -ne 'here we go... \r'
   sleep .5
@@ -79,6 +94,7 @@ function preproutine {
 function fullyAutomaticShotgun {
   installGit;
   preproutine;
+  install_allmacstuff;
   echo "Bang!";
 }
 
