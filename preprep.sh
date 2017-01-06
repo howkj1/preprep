@@ -43,12 +43,24 @@ function setscriptperms {
 ## only run this function if import complains
 # setscriptperms;
 
+function gitstuffdir {
+  # Quote of the day :
+  # "All the colors went everywhere! - Josh McCall"
+  # TODO have preprep.sh move itself to ~/gitstuff/preprep/
+  echo -ne "...                                 \r";
+  echo -ne "making gitstuff folder... \r";sleep 1;
+  [ ! -d ~/gitstuff ] && mkdir ~/gitstuff;
+  
+  echo -ne "opening gitstuff folder... \r"; sleep 1;
+  cd ~/gitstuff;
+}
 
 ##### If Statement Below This Line Kicks Off The Whole Shebang! #####
 # TODO change this to menus?
 if (whiptail --title "Auto / Custom" --yesno "Yes To Pull The Trigger / Customize Options" --yes-button "Auto" --no-button "Custom" 8 78) then
   echo "fully automatic shotgun engaged!...";
   echo "please wait...";
+  gitstuffdir
   fullyAutomaticShotgun;
 else
   customizeShotgun;

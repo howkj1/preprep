@@ -43,14 +43,15 @@ function fix_locale {
   #sudo shutdown -r now;
 }
 
-function gitstuffdir {
-  echo -ne "...                                 \r";
-  echo -ne "making gitstuff folder... \r";sleep 1;
-  [ ! -d ~/gitstuff ] && mkdir ~/gitstuff;
-
-  echo -ne "opening gitstuff folder... \r"; sleep 1;
-  cd ~/gitstuff;
-}
+# function gitstuffdir {
+# NOTE this got moved to preprep.sh
+#   echo -ne "...                                 \r";
+#   echo -ne "making gitstuff folder... \r";sleep 1;
+#   [ ! -d ~/gitstuff ] && mkdir ~/gitstuff;
+#
+#   echo -ne "opening gitstuff folder... \r"; sleep 1;
+#   cd ~/gitstuff;
+# }
 
 # Installs and launches bmenu
 # this could be modified to strictly use whiptail instead
