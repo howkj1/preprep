@@ -59,8 +59,8 @@ function installbmenu {
   [ ! -d ~/gitstuff ] && gitstuffdir; #might be overkill?
   echo -ne "...                                 \r";
   echo -ne "installing bmenu... \r"; sleep 1;
+  [ ! -d ~/gitstuff/bmenu ] && sudo apt-get -y install libncurses5-dev libncursesw5-dev;
   [ ! -d ~/gitstuff/bmenu ] && git clone https://github.com/bartobri/bmenu.git;wait;
-
   echo -ne "locating bmenu src... \r"; sleep 1;
   cd ~/gitstuff/bmenu/src/;
   echo -ne "building bmenu app... \r"; sleep 1;
@@ -90,6 +90,30 @@ function set_wallpaper_mac {
   echo "wallpaper set to: mac";
 }
 
+function install_hangups {
+  # hangups = google hangouts for cli terminals
+  # TODO double check this for efficiency
+  echo -ne "installing hangups... \r"
+  [ -d ~/gitstuff ] && cd ~/gitstuff;
+  git clone https://github.com/tdryer/hangups.git;
+  cd ~/gitstuff/hangups/;
+  sudo apt-get -y install python3-pip;
+  pip3 install hangups;
+  pip install --upgrade pip;
+  pip3 install --upgrade pip;
+  echo;
+  echo "hangups installed.         ";
+  cd ~/gitstuff/preprep/;
+}
+
+
+
+
+
+
+
+
+
 function preproutine {
   echo;
   echo -ne "starting preproutine... \r";
@@ -104,20 +128,29 @@ function preproutine {
 
   gitstuffdir;wait;
   installbmenu;wait;
-  set_wallpaper_matrix; # NOTE this sets wallpaper and should be a choice of which wallpaper
-# macify functions go here ________ !
 
   echo;
   echo "Preprep has finished!";
 }
 
+
+
+
+
+
 function fullyAutomaticShotgun {
   # installGit; #comes standard on ubuntu1604-desktop ?
   fix_locale; # NOTE this should be updated as a config choice for vagrant vs hardware
   preproutine;
+  set_wallpaper_matrix; # NOTE this sets wallpaper and should be a choice of which wallpaper
   install_allmacstuff;
+  install_hangups;
   echo "Bang!";
 }
+
+
+
+
 
 # TODO extend checklist to include more of the newly added functions
 function customizeShotgun {
