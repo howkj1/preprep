@@ -23,6 +23,17 @@ prepDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
 ## end of macify.sh ##
 #### end of imports ####
 
+function gitstuffdir {
+  # Quote of the day :
+  # "All the colors went everywhere! - Josh McCall"
+  echo -ne "...                                 \r";
+  echo -ne "making gitstuff folder... \r";sleep 1;
+  [ ! -d ~/gitstuff ] && mkdir ~/gitstuff;
+
+  echo -ne "opening gitstuff folder... \r"; sleep 1;
+  cd ~/gitstuff;
+}
+
 function installGit {
   clear;
   ### this block installs git
@@ -50,16 +61,6 @@ function prep_reboot {
   #reboot the machine!
   sudo shutdown -r now;
 }
-
-# function gitstuffdir {
-# NOTE this got moved to preprep.sh
-#   echo -ne "...                                 \r";
-#   echo -ne "making gitstuff folder... \r";sleep 1;
-#   [ ! -d ~/gitstuff ] && mkdir ~/gitstuff;
-#
-#   echo -ne "opening gitstuff folder... \r"; sleep 1;
-#   cd ~/gitstuff;
-# }
 
 # Installs and launches bmenu
 # this could be modified to strictly use whiptail instead
@@ -165,11 +166,34 @@ function fullyAutomaticShotgun {
 
 
 # TODO extend checklist to include more of the newly added functions
+# function customizeShotgun {
+#   whiptail --title "Preprep Setup" --checklist --separate-output \
+#     "Check Options: (arrows/space/tab/enter)" 10 50 2 \
+#       "Git" "Install Git " off \
+#       "Preprep" "Run Preprep " off \
+#     2>lastrun
+#
+#   while read choice
+#   do
+#           case $choice in
+#                   Git) installGit
+#                   ;;
+#                   Preprep) preproutine
+#                   ;;
+#                   *)
+#                   ;;
+#           esac
+#   done < lastrun
+#
+#   echo "Preprep has closed.";
+# }
+
 function customizeShotgun {
-  whiptail --title "Preprep Setup" --checklist --separate-output \
+  whiptail --title "Preprep Setup" --menu --separate-output \
     "Check Options: (arrows/space/tab/enter)" 10 50 2 \
       "Git" "Install Git " off \
       "Preprep" "Run Preprep " off \
+      "Matrix" "Set Wallpaper" off \
     2>lastrun
 
   while read choice
@@ -178,6 +202,8 @@ function customizeShotgun {
                   Git) installGit
                   ;;
                   Preprep) preproutine
+                  ;;
+                  Matrix) set_wallpaper_matrix
                   ;;
                   *)
                   ;;

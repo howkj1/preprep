@@ -37,25 +37,13 @@ prepDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
 #### end of imports ####
 
 
-function setscriptperms {
-  # if file exists, ensure executable
-  [ -f ./preprepfunctions.sh ] && chmod +x ./preprepfunctions.sh;
-  [ -f ./macify.sh ] && chmod +x ./macify.sh;
-}
-## only run this function if import complains
-# setscriptperms;
+# function setscriptperms {
+#   # if file exists, ensure executable
+#   ## only run this function if import complains
+#   [ -f ./preprepfunctions.sh ] && chmod +x ./preprepfunctions.sh;
+#   [ -f ./macify.sh ] && chmod +x ./macify.sh;
+# }
 
-function gitstuffdir {
-  # Quote of the day :
-  # "All the colors went everywhere! - Josh McCall"
-  # TODO have preprep.sh move itself to ~/gitstuff/preprep/
-  echo -ne "...                                 \r";
-  echo -ne "making gitstuff folder... \r";sleep 1;
-  [ ! -d ~/gitstuff ] && mkdir ~/gitstuff;
-
-  echo -ne "opening gitstuff folder... \r"; sleep 1;
-  cd ~/gitstuff;
-}
 
 function move_preprep_to_gitstuff {
   # moves, copies, or clones preprep scripts and deps into ~/gitstuff/preprep/
