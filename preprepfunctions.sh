@@ -79,9 +79,12 @@ function set_wallpaper_matrix {
   # set wallpaper to Matrix
   echo "";
   echo -en "downloading matrix wallpaper\r";
-  wget -P ~/Pictures/ -O matrix.jpg http://cdn.wonderfulengineering.com/wp-content/uploads/2014/04/code-wallpaper-16.jpg;
+  wget -P ~/Pictures/ http://cdn.wonderfulengineering.com/wp-content/uploads/2014/04/code-wallpaper-16.jpg;
+  echo -en "renaming matrix wallpaper    \r";
+  [ -f ~/Pictures/code-wallpaper-16.jpg ] && mv ~/Pictures/code-wallpaper-16.jpg ~/Pictures/matrix.jpg;
+  echo -en "setting desktop wallpaper to matrix.jpg \r";
   [ -f ~/Pictures/matrix.jpg ] && gsettings set org.gnome.desktop.background picture-uri file://~/Pictures/matrix.jpg;
-  echo "wallpaper set to: Matrix          ";
+  echo "wallpaper set to: Matrix                    ";
 }
 
 function set_wallpaper_mac {

@@ -50,18 +50,80 @@ function gitstuffdir {
   echo -ne "...                                 \r";
   echo -ne "making gitstuff folder... \r";sleep 1;
   [ ! -d ~/gitstuff ] && mkdir ~/gitstuff;
-  
+
   echo -ne "opening gitstuff folder... \r"; sleep 1;
   cd ~/gitstuff;
 }
 
-##### If Statement Below This Line Kicks Off The Whole Shebang! #####
+function move_preprep_to_gitstuff {
+  # TODO can preprep function without getting moved?
+  # moves, copies, or clones preprep scripts and deps into ~/gitstuff/preprep/
+
+}
+
+
+##### Statements Below This Line Kicks Off The Whole Shebang! #####
+
+### old way with yes/no ###
 # TODO change this to menus?
-if (whiptail --title "Auto / Custom" --yesno "Yes To Pull The Trigger / Customize Options" --yes-button "Auto" --no-button "Custom" 8 78) then
-  echo "fully automatic shotgun engaged!...";
-  echo "please wait...";
-  gitstuffdir
-  fullyAutomaticShotgun;
-else
-  customizeShotgun;
-fi;
+
+# if (whiptail --title "Auto / Custom" --yesno "Yes To Pull The Trigger / Customize Options" --yes-button "Auto" --no-button "Custom" 8 78)
+# then
+#   echo "fully automatic shotgun engaged!...";
+#   echo "please wait...";
+#   gitstuffdir
+#   fullyAutomaticShotgun;
+# else
+#   customizeShotgun;
+# fi;
+### end of old way with yes/no ###
+
+
+#########################
+### new way with menu ###
+
+## example 1
+# whiptail --title "Menu example" --menu "Choose an option" 25 78 16 \
+# "<-- Back" "Return to the main menu." \
+# "Add User" "Add a user to the system." \
+# "Modify User" "Modify an existing user." \
+# "List Users" "List all users on the system." \
+# "Add Group" "Add a user group to the system." \
+# "Modify Group" "Modify a group and its list of members." \
+# "List Groups" "List all groups on the system."
+## end example 1
+
+## working example 2 from preprepfunctions.sh customizeShotgun()
+# whiptail --title "Preprep Setup" --checklist --separate-output "Check Options: (arrows/space/tab/enter)" 10 50 2 \
+#     "Git" "Install Git " off \
+#     "Preprep" "Run Preprep " off \
+#   2>lastrun
+#
+# while read choice
+# do
+#         case $choice in
+#                 Git) installGit
+#                 ;;
+#                 Preprep) preproutine
+#                 ;;
+#                 *)
+#                 ;;
+#         esac
+# done < lastrun
+#
+# echo "Preprep has closed.";
+## end example 2
+
+## Cheatsheet:
+## A; B    Run A and then B, regardless of success of A
+## A && B  Run B if A succeeded
+## A || B  Run B if A failed
+## A &     Run A in background.
+
+
+## 1. ask user if they wish to fix locales and reboot or continue with preprep
+## 2. clone preprep into ~/gitstuff/preprep and launch preprep from there without shell inception (quit preprep from current dir)
+## 3.
+
+### end new way with menu ###
+#########################
