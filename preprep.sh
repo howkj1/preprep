@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# https://github.com/howkj1/preprep.git 
 # preprep.sh installs the packages and preparations needed for the rest of deployment.
 
 # preprep depends on preprepfunctions.sh and macify.sh
@@ -123,7 +124,26 @@ function move_preprep_to_gitstuff {
 
 ## 1. ask user if they wish to fix locales and reboot or continue with preprep
 ## 2. clone preprep into ~/gitstuff/preprep and launch preprep from there without shell inception (quit preprep from current dir)
-## 3.
+## 3. ...
+
+# 1.
+if (whiptail --title "Preprep Begin" --yesno "Continue / Repair Terminal and Reboot" --yes-button "Continue Preprep" --no-button "Repair Terminal & Reboot" 8 78)
+then
+  echo "repairing terminal...";
+  echo "please wait...";
+  fix_locale;
+  echo "rebooting...";sleep .5;
+  echo "please run preprep after reboot to finish routines."; sleep 2;
+  prep_reboot;
+
+else
+  customizeShotgun;
+fi;
+
+# 2.
+
+# 3.
+
 
 ### end new way with menu ###
 #########################
