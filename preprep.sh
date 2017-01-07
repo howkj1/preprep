@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# https://github.com/howkj1/preprep.git 
+# https://github.com/howkj1/preprep.git
 # preprep.sh installs the packages and preparations needed for the rest of deployment.
 
 # preprep depends on preprepfunctions.sh and macify.sh
@@ -59,7 +59,7 @@ function gitstuffdir {
 function move_preprep_to_gitstuff {
   # TODO can preprep function without getting moved?
   # moves, copies, or clones preprep scripts and deps into ~/gitstuff/preprep/
-
+  echo "this function move_preprep_to_gitstuff() does nothing, yet.";
 }
 
 
