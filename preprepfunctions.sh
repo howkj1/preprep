@@ -10,9 +10,10 @@
 ## begin magical code land ##
 
 ####    imports    ####
+prepDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
 
 ## macify.sh ##
-. ./macify.sh --source-only
+. $prepDIR/macify.sh --source-only;
 #
 # install_ppa; / install_wallpapers; / install_macbuntuTheme;
 # install_icons; / install_cursors; / install_launchpad;

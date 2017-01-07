@@ -26,9 +26,10 @@ clear;
 ## begin magical code land ##
 
 ####    imports    ####
+prepDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
 
 ## preprepfunctions.sh: ##
-. ./preprepfunctions.sh --source-only
+. $prepDIR/preprepfunctions.sh --source-only;
 # installGit / preproutine / installbmenu
 # fix_locale
 # fullyAutomaticShotgun / customizeShotgun
