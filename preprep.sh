@@ -130,15 +130,14 @@ function move_preprep_to_gitstuff {
 # 1.
 if (whiptail --title "Preprep Begin" --yesno "Continue / Repair Terminal and Reboot" --yes-button "Continue Preprep" --no-button "Repair Terminal & Reboot" 8 78)
 then
+  customizeShotgun;
+else
   echo "repairing terminal...";
   echo "please wait...";
   fix_locale;
   echo "rebooting...";sleep .5;
   echo "please run preprep after reboot to finish routines."; sleep 2;
   prep_reboot;
-
-else
-  customizeShotgun;
 fi;
 
 # 2.
