@@ -25,7 +25,8 @@ prepDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
 
 function installGit {
   clear;
-  ### this block installs git until script is updated to check if git is installed
+  ### this block installs git
+  # TODO until script is updated to check if git is installed
   echo;echo "checking for updates... ";
   sudo apt-get -qq update > /dev/null  2>&1; wait;
   echo -ne "...                                 \r";

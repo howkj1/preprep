@@ -58,9 +58,21 @@ function gitstuffdir {
 }
 
 function move_preprep_to_gitstuff {
-  # TODO can preprep function without getting moved?
   # moves, copies, or clones preprep scripts and deps into ~/gitstuff/preprep/
-  echo "this function move_preprep_to_gitstuff() does nothing, yet.";
+  echo "creating local preprep in ~/gitstuff/preprep/";
+  gitstuffdir;
+  [ ! -d ~/gitstuff/preprep ] && cd ~/gitstuff/preprep && git clone https://github.com/howkj1/preprep.git;
+}
+
+function boxcutter_repair {
+  # repair routine for vagrant boxcutter/ubuntu1604-desktop
+  echo "repairing terminal...";
+  echo "please wait...";
+  fix_locale;
+  move_preprep_to_gitstuff;
+  echo "rebooting...";sleep .5;
+  echo "please run preprep after reboot to finish routines."; sleep 2;
+  prep_reboot;
 }
 
 
@@ -132,12 +144,7 @@ if (whiptail --title "Preprep Begin" --yesno "Continue / Repair Terminal and Reb
 then
   customizeShotgun;
 else
-  echo "repairing terminal...";
-  echo "please wait...";
-  fix_locale;
-  echo "rebooting...";sleep .5;
-  echo "please run preprep after reboot to finish routines."; sleep 2;
-  prep_reboot;
+  boxcutter_repair;
 fi;
 
 # 2.
