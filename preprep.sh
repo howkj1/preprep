@@ -61,7 +61,7 @@ function move_preprep_to_gitstuff {
   # moves, copies, or clones preprep scripts and deps into ~/gitstuff/preprep/
   echo "creating local preprep in ~/gitstuff/preprep/";
   gitstuffdir;
-  [ ! -d ~/gitstuff/preprep ] && cd ~/gitstuff/preprep && git clone https://github.com/howkj1/preprep.git;
+  [ ! -d ~/gitstuff/preprep ] && cd ~/gitstuff && git clone https://github.com/howkj1/preprep.git;
 }
 
 function boxcutter_repair {
