@@ -130,11 +130,12 @@ function boxcutter_repair {
 ## 3. ...
 
 # 1.
-if (whiptail --title "Preprep Begin" --yesno "Continue / Repair Terminal and Reboot" --yes-button "Continue Preprep" --no-button "Repair Terminal & Reboot" 8 78)
+if (whiptail --title "Preprep Begin" --yesno "Preprep Assumes Ubuntu 16.04 w/ Unity" --yes-button "Continue Preprep" --no-button "quit" 8 78)
 then
   customizeShotgun;
 else
-  boxcutter_repair; # FIXME hitting esc coninues running this!
+  # boxcutter_repair; # FIXME hitting esc coninues running this!
+  echo "You have quit preprep."
 fi;
 
 # 2.
