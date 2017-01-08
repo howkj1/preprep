@@ -188,6 +188,33 @@ function fullyAutomaticShotgun {
 #   echo "Preprep has closed.";
 # }
 
+
+###>>>> this format works for whiptail menus >>>>>
+function working_whiptail_menu {
+
+  RETVAL=$(whiptail --title "Make a selection and Enter" \
+  --menu "Menu Script" 10 50 4 \
+  "a" "Do Stuff 1" \
+  "b" "Show super cool things" \
+  "c" "I am The Machine" \
+  "d" "Rockin" \
+  3>&1 1>&2 2>&3)
+
+  # Below you can enter the corresponding commands
+
+  case $RETVAL in
+      a) echo "dis is da title of da command"
+         echo "boo ya! dis is da command"; whiptail --title "done did it" --msgbox "you done it" 10 50;;
+      b) echo "You are so cool!";;
+      c) echo "I Am The Machine!";;
+      d) whiptail --title "Rockin" --msgbox "Rock Star" 10 50;;
+
+      *) echo "Invalid option. Quitting";
+  esac
+
+}
+###<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
 function customizeShotgun {
   whiptail --title "Preprep Setup" --menu \
    "Check Options: (arrows/space/tab/enter)" 10 50 3 \

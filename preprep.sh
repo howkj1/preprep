@@ -59,7 +59,9 @@ function boxcutter_repair {
   fix_locale;
   move_preprep_to_gitstuff;
   echo "rebooting...";sleep .5;
-  echo "please run preprep after reboot to finish routines."; sleep 2;
+  echo "please run preprep after reboot to finish routines.";
+  echo "~/gitstuff/preprep/preprep.sh";
+  sleep 3;
   prep_reboot;
 }
 
@@ -140,5 +142,5 @@ fi;
 # 3.
 
 
-### end new way with menu ###
+### end new way menu ###
 #########################
