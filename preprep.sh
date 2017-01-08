@@ -134,7 +134,7 @@ if (whiptail --title "Preprep Begin" --yesno "Continue / Repair Terminal and Reb
 then
   customizeShotgun;
 else
-  boxcutter_repair;
+  boxcutter_repair; # FIXME hitting esc coninues running this!
 fi;
 
 # 2.
