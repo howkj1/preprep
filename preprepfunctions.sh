@@ -189,11 +189,11 @@ function fullyAutomaticShotgun {
 # }
 
 function customizeShotgun {
-  whiptail --title "Preprep Setup" --menu --separate-output \
-    "Check Options: (arrows/space/tab/enter)" 10 50 2 \
-      "Git" "Install Git " off \
-      "Preprep" "Run Preprep " off \
-      "Matrix" "Set Wallpaper" off \
+  whiptail --title "Preprep Setup" --menu \
+   "Check Options: (arrows/space/tab/enter)" 10 50 3 \
+      "Git" "Install Git " \
+      "Preprep" "Run Preprep " \
+      "Matrix" "Set Wallpaper" \
     2>lastrun
 
   while read choice
