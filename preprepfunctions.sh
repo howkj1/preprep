@@ -193,23 +193,22 @@ function fullyAutomaticShotgun {
 function working_whiptail_menu {
 
   RETVAL=$(whiptail --title "Make a selection and Enter" \
-  --menu "Menu Script" 10 50 4 \
-  "a" "Do Stuff 1" \
-  "b" "Show super cool things" \
-  "c" "I am The Machine" \
-  "d" "Rockin" \
+  --menu "Menu" 10 50 4 \
+  "a" "Custom Install menu -->" \
+  "b" "Install Hangups" \
+  "c" "Repair gnome-terminal locales" \
+  "d" "quit preprep" \
   3>&1 1>&2 2>&3)
 
   # Below you can enter the corresponding commands
 
   case $RETVAL in
-      a) echo "dis is da title of da command"
-         echo "boo ya! dis is da command"; whiptail --title "done did it" --msgbox "you done it" 10 50;;
+      a) echo "custom menu goes here"; whiptail --title "cutom menu" --msgbox "goes here" 10 50;;
       b) echo "You are so cool!";;
       c) echo "I Am The Machine!";;
-      d) whiptail --title "Rockin" --msgbox "Rock Star" 10 50;;
+      d) echo "You have quit preprep.";;
 
-      *) echo "Invalid option. Quitting";
+      *) echo "Preprep has quit.";
   esac
 
 }
