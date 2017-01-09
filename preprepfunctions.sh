@@ -119,7 +119,11 @@ function install_hangups {
   cd ~/gitstuff/preprep/;
 }
 
-
+function install_vncserver {
+  echo "installing tightvncserver...";
+  sudo apt-get -y -qq install tightvncserver;
+  echo "tightvncserver installed.";
+}
 
 
 
@@ -195,8 +199,8 @@ function working_whiptail_menu {
   RETVAL=$(whiptail --title "Make a selection and Enter" \
   --menu "Menu" 10 50 4 \
   "a" "Custom Install menu -->" \
-  "b" "Install Hangups" \
-  "c" "Repair gnome-terminal locales" \
+  "b" "Repair gnome-terminal locales" \
+  "c" "Install VNC Server" \
   "d" "quit preprep" \
   3>&1 1>&2 2>&3)
 
@@ -204,12 +208,12 @@ function working_whiptail_menu {
 
   case $RETVAL in
       a) echo "custom menu goes here"; whiptail --title "cutom menu" --msgbox "goes here" 10 50;;
-      b) echo "You are so cool!";;
-      c) echo "I Am The Machine!";;
+      b) fix_locale;;
+      c) install_vncserver;;
       d) echo "You have quit preprep.";;
-
       *) echo "Preprep has quit.";
   esac
+  # c) echo "I Am The Machine!";;
 
 }
 ###<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
