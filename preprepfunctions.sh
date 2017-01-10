@@ -15,7 +15,7 @@ prepDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
 ## macify.sh ##
 . $prepDIR/macify.sh --source-only;
 #
-# install_ppa; / install_wallpapers; / install_macbuntuTheme;
+# install_ppa; / install_mac_wallpapers; / install_macbuntuTheme;
 # install_icons; / install_cursors; / install_launchpad;
 # install_spotlight; / install_dock; / install_applemenu;
 # install_applelogolauncher; / install_tools; / install_librefonts;
@@ -24,14 +24,41 @@ prepDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
 #### end of imports ####
 
 function gitstuffdir {
-  # Quote of the day :
-  # "All the colors went everywhere! - Josh McCall"
   echo -ne "...                                 \r";
   echo -ne "making gitstuff folder... \r";sleep 1;
   [ ! -d ~/gitstuff ] && mkdir ~/gitstuff;
 
   echo -ne "opening gitstuff folder... \r"; sleep 1;
   cd ~/gitstuff;
+}
+
+function move_preprep_to_gitstuff {
+  # moves, copies, or clones preprep scripts and deps into ~/gitstuff/preprep/
+  echo "creating local preprep in ~/gitstuff/preprep/";
+  gitstuffdir;
+  [ ! -d ~/gitstuff/preprep ] && cd ~/gitstuff && git clone https://github.com/howkj1/preprep.git;
+}
+
+function fix_locale {
+  # fixes: vagrant boxcutter/ubuntu1604-desktop
+  # failure to load gnome-terminal
+  # http://askubuntu.com/questions/765580/ubuntu-16-04-live-usb-gnome-terminal-not-opening-by-any-means
+  sudo locale-gen "en_US.UTF-8";
+  sudo localectl set-locale LANG="en_US.UTF-8";
+  #sudo shutdown -r now;
+}
+
+function boxcutter_repair {
+  # repair routine for vagrant boxcutter/ubuntu1604-desktop
+  echo "repairing terminal...";
+  echo "please wait...";
+  fix_locale;
+  move_preprep_to_gitstuff;
+  echo "rebooting...";sleep .5;
+  echo "please run preprep after reboot to finish routines.";
+  echo "~/gitstuff/preprep/preprep.sh";
+  sleep 3;
+  prep_reboot;
 }
 
 function installGit {
@@ -45,15 +72,6 @@ function installGit {
   sudo apt-get -qq -y install git; wait;
   echo -ne "git installed!      \r";
   ###
-}
-
-function fix_locale {
-  # fixes: vagrant boxcutter/ubuntu1604-desktop
-  # failure to load gnome-terminal
-  # http://askubuntu.com/questions/765580/ubuntu-16-04-live-usb-gnome-terminal-not-opening-by-any-means
-  sudo locale-gen "en_US.UTF-8";
-  sudo localectl set-locale LANG="en_US.UTF-8";
-  #sudo shutdown -r now;
 }
 
 function prep_reboot {
@@ -98,6 +116,9 @@ function set_wallpaper_matrix {
 }
 
 function enter_matrix {
+  # Quote of the day :
+  # "All the colors went everywhere! - Josh McCall"
+
   # Enter The Matrix
     echo -e "\033[2J\033[?25l"; R=`tput lines` C=`tput cols`;: $[R--] ; while true
     do ( e=echo\ -e s=sleep j=$[RANDOM%C] d=$[RANDOM%R];for i in `eval $e {1..$R}`;
@@ -163,8 +184,6 @@ function redpill {
   echo "red pill";
 }
 
-
-
 function preproutine {
   echo;
   echo -ne "starting preproutine... \r";
@@ -184,24 +203,15 @@ function preproutine {
   echo "Preprep has finished!";
 }
 
-
-
-
-
-
 function fullyAutomaticShotgun {
   # installGit; #comes standard on ubuntu1604-desktop ?
-  fix_locale; # NOTE this should be updated as a config choice for vagrant vs hardware
+  # TODO full auto needs some updating once custom menu is done being built!
   preproutine;
   set_wallpaper_mac; # NOTE this sets wallpaper and should be a choice of which wallpaper
   install_allmacstuff;
   install_hangups;
   echo "Bang!";
 }
-
-
-
-
 
 # TODO extend checklist to include more of the newly added functions
 # function customizeShotgun {
@@ -226,27 +236,50 @@ function fullyAutomaticShotgun {
 #   echo "Preprep has closed.";
 # }
 
+# function customizeShotgun {
+#   whiptail --title "Preprep Setup" --menu \
+#    "Check Options: (arrows/space/tab/enter)" 10 50 3 \
+#       "Git" "Install Git " \
+#       "Preprep" "Run Preprep " \
+#       "Matrix" "Set Wallpaper" \
+#     2>lastrun
+#
+#   while read choice
+#   do
+#           case $choice in
+#                   Git) installGit
+#                   ;;
+#                   Preprep) preproutine
+#                   ;;
+#                   Matrix) set_wallpaper_matrix
+#                   ;;
+#                   *)
+#                   ;;
+#           esac
+#   done < lastrun
+#
+#   echo "Preprep has closed.";
+# }
+
 
 ###>>>> this format works for whiptail menus >>>>>
-function working_whiptail_menu {
+function main_menu {
 
   RETVAL=$(whiptail --title "Make a selection and Enter" \
   --menu "Menu" 10 50 4 \
-  "a" "Custom Install menu -->" \
-  "b" "Repair gnome-terminal locales" \
-  "c" "Install VNC Server" \
-  "d" "Set Wallpaper to Matrix" \
-  "e" "quit preprep" \
+  "a" "Repair gnome-terminal locales - fix boxcutter" \
+  "b" "Custom Install menu -->" \
+  "c" "Install Everything! - be careful!" \
+  "d" "quit preprep" \
   3>&1 1>&2 2>&3)
 
   # Below you can enter the corresponding commands
 
   case $RETVAL in
       a) echo "custom menu goes here"; whiptail --title "cutom menu" --msgbox "goes here" 10 50;;
-      b) fix_locale;;
-      c) install_vncserver;;
-      d) redpill;;
-      e) echo "You have quit preprep.";;
+      b) boxcutter_repair;;
+      c) fullyAutomaticShotgun;;
+      d) echo "You have quit preprep.";;
       *) echo "Preprep has quit.";
   esac
   # c) echo "I Am The Machine!";;
@@ -254,27 +287,7 @@ function working_whiptail_menu {
 }
 ###<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-function customizeShotgun {
-  whiptail --title "Preprep Setup" --menu \
-   "Check Options: (arrows/space/tab/enter)" 10 50 3 \
-      "Git" "Install Git " \
-      "Preprep" "Run Preprep " \
-      "Matrix" "Set Wallpaper" \
-    2>lastrun
-
-  while read choice
-  do
-          case $choice in
-                  Git) installGit
-                  ;;
-                  Preprep) preproutine
-                  ;;
-                  Matrix) set_wallpaper_matrix
-                  ;;
-                  *)
-                  ;;
-          esac
-  done < lastrun
-
-  echo "Preprep has closed.";
-}
+# repair
+# custom
+# auto
+# quit

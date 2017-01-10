@@ -18,7 +18,7 @@ function install_ppa {
   sudo apt-get update;
 }
 
-function install_wallpapers {
+function install_mac_wallpapers {
   # #2015
   # wget -P ~/Pictures http://drive.noobslab.com/data/Mac-14.10/MBuntu-Wallpapers.zip ;
   # unzip ~/Pictures/MBuntu-Wallpapers.zip -d ~/Pictures;
@@ -107,10 +107,10 @@ function set_macthemes {
 
 function install_allmacstuff {
   install_ppa;
-  install_wallpapers;
+  install_mac_wallpapers;
   install_macbuntuTheme;
   install_icons;
-  install_cursors;
+  # install_cursors;
   install_launchpad;
   install_spotlight;
   install_dock;
