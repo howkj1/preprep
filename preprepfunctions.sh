@@ -203,7 +203,8 @@ function working_whiptail_menu {
   "a" "Custom Install menu -->" \
   "b" "Repair gnome-terminal locales" \
   "c" "Install VNC Server" \
-  "d" "quit preprep" \
+  "d" "Set Wallpaper to Matrix" \
+  "e" "quit preprep" \
   3>&1 1>&2 2>&3)
 
   # Below you can enter the corresponding commands
@@ -212,7 +213,8 @@ function working_whiptail_menu {
       a) echo "custom menu goes here"; whiptail --title "cutom menu" --msgbox "goes here" 10 50;;
       b) fix_locale;;
       c) install_vncserver;;
-      d) echo "You have quit preprep.";;
+      d) set_wallpaper_matrix;;
+      e) echo "You have quit preprep.";;
       *) echo "Preprep has quit.";
   esac
   # c) echo "I Am The Machine!";;
