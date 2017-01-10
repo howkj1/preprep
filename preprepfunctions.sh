@@ -153,6 +153,8 @@ function sniper {
   enter_matrix;
   wait;sleep 3s;
   clear;
+  sleep 4;
+  clear;
   echo "red pill";
 }
 
