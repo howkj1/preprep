@@ -148,10 +148,8 @@ function install_espeak {
 
 function sniper {
   # kills your function after set time
-  # sleep 5s && kill $$ &
-  enter_matrix & sniper_pid=$!
-  sleep 5 & wait
-  kill $sniper_pid 2> /dev/null;
+  sleep 5s && kill $$ &
+  enter_matrix; 
 }
 
 
