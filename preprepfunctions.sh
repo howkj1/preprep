@@ -120,8 +120,10 @@ function install_hangups {
 }
 
 function install_vncserver {
+  echo;
   echo "installing tightvncserver...";
-  sudo apt-get -y -qq install tightvncserver;
+  sudo apt-get -qq -y install tightvncserver;
+  echo;
   echo "tightvncserver installed.";
 }
 
