@@ -97,10 +97,20 @@ function set_wallpaper_matrix {
   echo "wallpaper set to: Matrix                    ";
 }
 
+function enter_matrix {
+  # Enter The Matrix
+    echo -e "\033[2J\033[?25l"; R=`tput lines` C=`tput cols`;: $[R--] ; while true
+    do ( e=echo\ -e s=sleep j=$[RANDOM%C] d=$[RANDOM%R];for i in `eval $e {1..$R}`;
+    do c=`printf '\\\\0%o' $[RANDOM%57+33]` ### http://bruxy.regnet.cz/web/linux ###
+    $e "\033[$[i-1];${j}H\033[32m$c\033[$i;${j}H\033[37m"$c; $s 0.1;if [ $i -ge $d ]
+    then $e "\033[$[i-d];${j}H ";fi;done;for i in `eval $e {$[i-d]..$R}`; #[mat!rix]
+    do echo -e "\033[$i;${j}f ";$s 0.1;done)& sleep 0.05;done #(c) 2011 -- [ BruXy ]
+}
+
 function set_wallpaper_mac {
   # set wallpaper to Matrix
   echo "";
-  [ -f ~/Pictures/mbuntu-3.jpg ] && gsettings set org.gnome.desktop.background picture-uri file://~/Pictures/mbuntu-3.jpg;
+  [ -f ~/Pictures/mbuntu-3.jpg ] && gsettings set org.gnome.desktop.background picture-uri file:///home/$USER/Pictures/mbuntu-3.jpg;
   echo "wallpaper set to: mac";
 }
 
@@ -128,7 +138,13 @@ function install_vncserver {
   echo "tightvncserver installed.";
 }
 
-
+function install_espeak {
+  # It Talks!
+  sudo apt-get install espeak;
+  espeak "you have been weighed"; wait 1;
+  espeak "you have been measured"; wait 1;
+  espeak "and you have been found wanting";
+}
 
 
 
@@ -162,7 +178,7 @@ function fullyAutomaticShotgun {
   # installGit; #comes standard on ubuntu1604-desktop ?
   fix_locale; # NOTE this should be updated as a config choice for vagrant vs hardware
   preproutine;
-  set_wallpaper_matrix; # NOTE this sets wallpaper and should be a choice of which wallpaper
+  set_wallpaper_mac; # NOTE this sets wallpaper and should be a choice of which wallpaper
   install_allmacstuff;
   install_hangups;
   echo "Bang!";
@@ -214,7 +230,7 @@ function working_whiptail_menu {
       a) echo "custom menu goes here"; whiptail --title "cutom menu" --msgbox "goes here" 10 50;;
       b) fix_locale;;
       c) install_vncserver;;
-      d) set_wallpaper_matrix;;
+      d) set_wallpaper_matrix; timeout 7 enter_matrix ;;
       e) echo "You have quit preprep.";;
       *) echo "Preprep has quit.";
   esac
