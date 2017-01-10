@@ -155,9 +155,10 @@ function sniper {
   ### HERE, YOU TELL THE SHELL TO NOT CARE ANY MORE ###
   disown $BG_PID
   ###
-  sleep 7s;
+  sleep 5s;
   # kill it, hard and mercyless, now without a trace
   kill -9 $BG_PID;
+  sleep 4;
   clear;
   echo "red pill";
 }
