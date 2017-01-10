@@ -92,7 +92,8 @@ function set_wallpaper_matrix {
   echo -en "renaming matrix wallpaper    \r";
   [ -f ~/Pictures/code-wallpaper-16.jpg ] && mv ~/Pictures/code-wallpaper-16.jpg ~/Pictures/matrix.jpg;
   echo -en "setting desktop wallpaper to matrix.jpg \r";
-  [ -f ~/Pictures/matrix.jpg ] && gsettings set org.gnome.desktop.background picture-uri file://~/Pictures/matrix.jpg;
+  # [ -f ~/Pictures/matrix.jpg ] && gsettings set org.gnome.desktop.background picture-uri file://~/Pictures/matrix.jpg;
+  [ -f ~/Pictures/matrix.jpg ] && gsettings set org.gnome.desktop.background picture-uri file:///home/$USER/Pictures/matrix.jpg;
   echo "wallpaper set to: Matrix                    ";
 }
 
