@@ -146,7 +146,7 @@ function install_espeak {
   espeak "and you have been found wanting";
 }
 
-function sniper {
+function redpill {
   # example background process
   set_wallpaper_matrix;
   enter_matrix &
@@ -245,7 +245,7 @@ function working_whiptail_menu {
       a) echo "custom menu goes here"; whiptail --title "cutom menu" --msgbox "goes here" 10 50;;
       b) fix_locale;;
       c) install_vncserver;;
-      d) sniper;;
+      d) redpill;;
       e) echo "You have quit preprep.";;
       *) echo "Preprep has quit.";
   esac
