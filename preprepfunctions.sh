@@ -147,13 +147,15 @@ function install_espeak {
 }
 
 function sniper {
-  # kills your function after set time
-  # sleep 5s && kill $$ &
-  set_wallpaper_matrix && sleep 5s && kill $$ &
-  enter_matrix;
-  wait;sleep 3s;
-  clear;
-  sleep 4;
+  # example background process
+  set_wallpaper_matrix && enter_matrix &
+  # get the PID
+  BG_PID=$!
+  ### HERE, YOU TELL THE SHELL TO NOT CARE ANY MORE ###
+  disown $BG_PID
+  ###
+  # kill it, hard and mercyless, now without a trace
+  kill -9 $BG_PID;
   clear;
   echo "red pill";
 }
