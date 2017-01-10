@@ -148,12 +148,14 @@ function install_espeak {
 
 function sniper {
   # example background process
-  set_wallpaper_matrix && enter_matrix &
+  set_wallpaper_matrix;
+  enter_matrix &
   # get the PID
   BG_PID=$!
   ### HERE, YOU TELL THE SHELL TO NOT CARE ANY MORE ###
   disown $BG_PID
   ###
+  sleep 7s;
   # kill it, hard and mercyless, now without a trace
   kill -9 $BG_PID;
   clear;
