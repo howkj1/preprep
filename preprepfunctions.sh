@@ -148,8 +148,11 @@ function install_espeak {
 
 function sniper {
   # kills your function after set time
-  sleep 5s && kill $$ &
-  enter_matrix; 
+  # sleep 5s && kill $$ &
+  set_wallpaper_matrix && kill $$ &
+  enter_matrix;
+  wait;
+  clear; 
 }
 
 
