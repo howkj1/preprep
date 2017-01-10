@@ -146,7 +146,13 @@ function install_espeak {
   espeak "and you have been found wanting";
 }
 
-
+function sniper {
+  # kills your function after set time
+  # sleep 5s && kill $$ &
+  enter_matrix & sniper_pid=$!
+  sleep 5 & wait
+  kill $sniper_pid 2> /dev/null;
+}
 
 
 
@@ -230,7 +236,7 @@ function working_whiptail_menu {
       a) echo "custom menu goes here"; whiptail --title "cutom menu" --msgbox "goes here" 10 50;;
       b) fix_locale;;
       c) install_vncserver;;
-      d) set_wallpaper_matrix; timeout 7 enter_matrix ;;
+      d) sniper;;
       e) echo "You have quit preprep.";;
       *) echo "Preprep has quit.";
   esac
