@@ -256,7 +256,7 @@ function customize_menu {
         11.) install_espeak;;
         12.) install_allmacstuff;;
 
-        *) $prepDIR/preprep.sh;;
+        *) echo "done";;
     esac
   done < lastrun
 }
