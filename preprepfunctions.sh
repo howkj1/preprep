@@ -225,7 +225,7 @@ function fullyAutomaticShotgun {
 
 function customize_menu {
   RETVAL=$(whiptail --title "Custom Install Menu" \
-  --checklist "Select all desired apps/settings to be installed:" 20 50 8 \
+  --checklist "Select all desired apps/settings to be installed:" --separate-output 20 50 8 \
   "1." "mac menu -->" off \
   "2." "Repair gnome-terminal locales" off \
   "3." "build ~/gitstuff" off \
@@ -242,17 +242,17 @@ function customize_menu {
   # Below you can enter the corresponding commands
   case $RETVAL in
       1.) echo "mac menu goes here"; whiptail --title "cutom menu" --msgbox "goes here" 10 50;;
-      2.) fix_locale;
-      3.) gitstuffdir;
-      4.) move_preprep_to_gitstuff;
-      5.) installbmenu;
-      6.) set_wallpaper_matrix;
-      7.) redpill;
-      8.) set_wallpaper_mac;
-      9.) install_hangups;
-      10.) install_vncserver;
-      11.) install_espeak;
-      12.) install_allmacstuff;
+      2.) fix_locale;;
+      3.) gitstuffdir;;
+      4.) move_preprep_to_gitstuff;;
+      5.) installbmenu;;
+      6.) set_wallpaper_matrix;;
+      7.) redpill;;
+      8.) set_wallpaper_mac;;
+      9.) install_hangups;;
+      10.) install_vncserver;;
+      11.) install_espeak;;
+      12.) install_allmacstuff;;
 
       *) main_menu;
   esac
