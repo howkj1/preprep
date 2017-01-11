@@ -225,7 +225,7 @@ function fullyAutomaticShotgun {
 
 function customize_menu {
   (whiptail --title "Custom Install Menu" \
-  --checklist "Select all desired apps/settings to be installed:" --separate-output 20 50 8 \
+  --checklist --separate-output "Select all desired apps/settings to be installed:" 20 50 8 \
   "1." "mac menu -->" off \
   "2." "Repair gnome-terminal locales" off \
   "3." "build ~/gitstuff" off \
@@ -258,9 +258,9 @@ function customize_menu {
   #         esac
   # done < results
 
-  while read RETVAL
+  while read choice
     do
-    case $RETVAL in
+    case $choice in
         1.) echo "mac menu goes here"; whiptail --title "cutom menu" --msgbox "goes here" 10 50;;
         2.) fix_locale;;
         3.) gitstuffdir;;
