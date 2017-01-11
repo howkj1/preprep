@@ -224,7 +224,7 @@ function fullyAutomaticShotgun {
   # quit
 
 function customize_menu {
-  (whiptail --title "Custom Install Menu" \
+  RETVAL=$(whiptail --title "Custom Install Menu" \
   --checklist --separate-output "Select all desired apps/settings to be installed:" 20 50 8 \
   "1." "mac menu -->" off \
   "2." "Repair gnome-terminal locales" off \
@@ -238,27 +238,24 @@ function customize_menu {
   "10." "install vncserver" off \
   "11." "install espeak" off \
   "12." "install ALL mac stuff" off \
-  2>lastrun
+  3>&1 1>&2 2>&3)
+  # Below you can enter the corresponding commands
+  eval case $RETVAL in
+      1.) echo "mac menu goes here"; whiptail --title "cutom menu" --msgbox "goes here" 10 50;;
+      2.) fix_locale;;
+      3.) gitstuffdir;;
+      4.) move_preprep_to_gitstuff;;
+      5.) installbmenu;;
+      6.) set_wallpaper_matrix;;
+      7.) redpill;;
+      8.) set_wallpaper_mac;;
+      9.) install_hangups;;
+      10.) install_vncserver;;
+      11.) install_espeak;;
+      12.) install_allmacstuff;;
 
-  while read choice
-    do
-    case $choice in
-        1.) echo "mac menu goes here"; whiptail --title "cutom menu" --msgbox "goes here" 10 50;;
-        2.) fix_locale;;
-        3.) gitstuffdir;;
-        4.) move_preprep_to_gitstuff;;
-        5.) installbmenu;;
-        6.) set_wallpaper_matrix;;
-        7.) redpill;;
-        8.) set_wallpaper_mac;;
-        9.) install_hangups;;
-        10.) install_vncserver;;
-        11.) install_espeak;;
-        12.) install_allmacstuff;;
-
-        *) echo "done";;
-    esac
-  done < lastrun
+      *) main_menu;
+  esac
 }
 
 
