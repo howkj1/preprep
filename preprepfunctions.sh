@@ -238,7 +238,7 @@ function customize_menu {
   "10." "install vncserver" off \
   "11." "install espeak" off \
   "12." "install ALL mac stuff" off \
-  2>lastrun.log
+  2>lastrun
   # 3>&1 1>&2 2>&3)
   # Below you can enter the corresponding commands
 
@@ -276,7 +276,7 @@ function customize_menu {
 
         *) $prepDIR/preprep.sh;;
     esac
-  done < lastrun.log
+  done < lastrun
 }
 
 
