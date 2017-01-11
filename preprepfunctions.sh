@@ -239,24 +239,6 @@ function customize_menu {
   "11." "install espeak" off \
   "12." "install ALL mac stuff" off \
   2>lastrun
-  # 3>&1 1>&2 2>&3)
-  # Below you can enter the corresponding commands
-
-  # off 2>results
-  #
-  # while read choice
-  # do
-  #         case $choice in
-  #                 John) firstroutine
-  #                 ;;
-  #                 Glen) secondroutine
-  #                 ;;
-  #                 Adam) thirdroutine
-  #                 ;;
-  #                 *)
-  #                 ;;
-  #         esac
-  # done < results
 
   while read choice
     do
