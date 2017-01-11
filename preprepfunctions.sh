@@ -224,7 +224,7 @@ function fullyAutomaticShotgun {
   # quit
 
 function customize_menu {
-  RETVAL=$(whiptail --title "Custom Install Menu" \
+  (whiptail --title "Custom Install Menu" \
   --checklist "Select all desired apps/settings to be installed:" --separate-output 20 50 8 \
   "1." "mac menu -->" off \
   "2." "Repair gnome-terminal locales" off \
@@ -238,10 +238,27 @@ function customize_menu {
   "10." "install vncserver" off \
   "11." "install espeak" off \
   "12." "install ALL mac stuff" off \
-  3>&1 1>&2 2>&3)
+  2>lastrun.log
+  # 3>&1 1>&2 2>&3)
   # Below you can enter the corresponding commands
 
-  while read choices
+  # off 2>results
+  #
+  # while read choice
+  # do
+  #         case $choice in
+  #                 John) firstroutine
+  #                 ;;
+  #                 Glen) secondroutine
+  #                 ;;
+  #                 Adam) thirdroutine
+  #                 ;;
+  #                 *)
+  #                 ;;
+  #         esac
+  # done < results
+
+  while read RETVAL
     do
     case $RETVAL in
         1.) echo "mac menu goes here"; whiptail --title "cutom menu" --msgbox "goes here" 10 50;;
@@ -259,7 +276,7 @@ function customize_menu {
 
         *) main_menu;
     esac
-  done
+  done < lastrun.log
 }
 
 
