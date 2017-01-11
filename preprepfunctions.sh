@@ -274,7 +274,7 @@ function customize_menu {
         11.) install_espeak;;
         12.) install_allmacstuff;;
 
-        *) main_menu;
+        *) main_menu;;
     esac
   done < lastrun.log
 }
