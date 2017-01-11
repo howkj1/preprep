@@ -261,14 +261,39 @@ function fullyAutomaticShotgun {
 #   echo "Preprep has closed.";
 # }
 
+# main menu
+  # repair
+  # custom
+    ##--> checkbox menu
+      ###--> macify sub checkbox menu? (or just show all?)
+  # auto # TODO whiptail progress bar for auto.
+  # quit
+
+  function customize_menu {
+
+    RETVAL=$(whiptail --title "Check all desired apps/settings to be installed" \
+    --checklist "Custom Install Menu" 15 50 8 \
+    "a" "Custom Install menu -->" off \
+    "b" "Repair gnome-terminal locales - fix boxcutter" off \
+    "c" "Install Everything! - be careful!" off \
+    3>&1 1>&2 2>&3)
+    # Below you can enter the corresponding commands
+    case $RETVAL in
+        a) echo "custom menu goes here"; whiptail --title "cutom menu" --msgbox "goes here" 10 50;;
+        b) boxcutter_repair;;
+        c) fullyAutomaticShotgun;;
+        *) echo "Preprep has quit.";
+    esac
+  }
+
 
 ###>>>> this format works for whiptail menus >>>>>
 function main_menu {
 
   RETVAL=$(whiptail --title "Make a selection and Enter" \
-  --menu "Menu" 10 50 4 \
-  "a" "Repair gnome-terminal locales - fix boxcutter" \
-  "b" "Custom Install menu -->" \
+  --menu "Main Menu" 10 50 4 \
+  "a" "Custom Install menu -->" \
+  "b" "Repair gnome-terminal locales - fix boxcutter" \
   "c" "Install Everything! - be careful!" \
   "d" "quit preprep" \
   3>&1 1>&2 2>&3)
@@ -276,7 +301,8 @@ function main_menu {
   # Below you can enter the corresponding commands
 
   case $RETVAL in
-      a) echo "custom menu goes here"; whiptail --title "cutom menu" --msgbox "goes here" 10 50;;
+      # a) echo "custom menu goes here"; whiptail --title "cutom menu" --msgbox "goes here" 10 50;;
+      a) customize_menu;;
       b) boxcutter_repair;;
       c) fullyAutomaticShotgun;;
       d) echo "You have quit preprep.";;
@@ -286,8 +312,3 @@ function main_menu {
 
 }
 ###<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-
-# repair
-# custom
-# auto
-# quit
