@@ -27,7 +27,6 @@ function gitstuffdir {
   echo -ne "...                                 \r";
   echo -ne "making gitstuff folder... \r";sleep 1;
   [ ! -d ~/gitstuff ] && mkdir ~/gitstuff;
-
   echo -ne "opening gitstuff folder... \r"; sleep 1;
   cd ~/gitstuff;
 }
@@ -80,13 +79,14 @@ function prep_reboot {
   sudo shutdown -r now;
 }
 
-# Installs and launches bmenu
-# this could be modified to strictly use whiptail instead
-# but I like bmenu and want it available, so here it is.
 function installbmenu {
+  # Installs and launches bmenu
+  # this could be modified to strictly use whiptail instead
+  # but I like bmenu and want it available, so here it is.
   [ ! -d ~/gitstuff ] && gitstuffdir; #might be overkill?
   echo -ne "...                                 \r";
   echo -ne "installing bmenu... \r"; sleep 1;
+  cd ~/gitstuff/;
   [ ! -d ~/gitstuff/bmenu ] && sudo apt-get -y install libncurses5-dev libncursesw5-dev;
   [ ! -d ~/gitstuff/bmenu ] && git clone https://github.com/bartobri/bmenu.git;wait;
   echo -ne "locating bmenu src... \r"; sleep 1;
@@ -137,18 +137,18 @@ function set_wallpaper_mac {
 
 function install_hangups {
   # hangups = google hangouts for cli terminals
-  # TODO double check this for efficiency
+  # https://hangups.readthedocs.io/en/stable/installation.html
   echo -ne "installing hangups... \r"
-  [ -d ~/gitstuff ] && cd ~/gitstuff;
-  git clone https://github.com/tdryer/hangups.git;
-  cd ~/gitstuff/hangups/;
-  sudo apt-get -y install python3-pip;
+  # [ -d ~/gitstuff ] && cd ~/gitstuff;
+  # git clone https://github.com/tdryer/hangups.git;
+  # cd ~/gitstuff/hangups/;
+  sudo apt-get -qq -y install python3-pip;
   pip3 install hangups;
-  pip install --upgrade pip;
-  pip3 install --upgrade pip;
+  # pip install --upgrade pip;
+  # pip3 install --upgrade pip;
   echo;
   echo "hangups installed.         ";
-  cd ~/gitstuff/preprep/;
+  # cd ~/gitstuff/preprep/;
 }
 
 function install_vncserver {
@@ -207,84 +207,37 @@ function fullyAutomaticShotgun {
   # installGit; #comes standard on ubuntu1604-desktop ?
   # TODO full auto needs some updating once custom menu is done being built!
   preproutine;
-  set_wallpaper_mac; # NOTE this sets wallpaper and should be a choice of which wallpaper
+  gitstuffdir;
+  set_wallpaper_mac;
   install_allmacstuff;
   install_hangups;
   echo "Bang!";
 }
 
-# TODO extend checklist to include more of the newly added functions
-# function customizeShotgun {
-#   whiptail --title "Preprep Setup" --checklist --separate-output \
-#     "Check Options: (arrows/space/tab/enter)" 10 50 2 \
-#       "Git" "Install Git " off \
-#       "Preprep" "Run Preprep " off \
-#     2>lastrun
-#
-#   while read choice
-#   do
-#           case $choice in
-#                   Git) installGit
-#                   ;;
-#                   Preprep) preproutine
-#                   ;;
-#                   *)
-#                   ;;
-#           esac
-#   done < lastrun
-#
-#   echo "Preprep has closed.";
-# }
-
-# function customizeShotgun {
-#   whiptail --title "Preprep Setup" --menu \
-#    "Check Options: (arrows/space/tab/enter)" 10 50 3 \
-#       "Git" "Install Git " \
-#       "Preprep" "Run Preprep " \
-#       "Matrix" "Set Wallpaper" \
-#     2>lastrun
-#
-#   while read choice
-#   do
-#           case $choice in
-#                   Git) installGit
-#                   ;;
-#                   Preprep) preproutine
-#                   ;;
-#                   Matrix) set_wallpaper_matrix
-#                   ;;
-#                   *)
-#                   ;;
-#           esac
-#   done < lastrun
-#
-#   echo "Preprep has closed.";
-# }
 
 # main menu
-  # repair
   # custom
+  # repair
     ##--> checkbox menu
       ###--> macify sub checkbox menu? (or just show all?)
   # auto # TODO whiptail progress bar for auto.
   # quit
 
-  function customize_menu {
-
-    RETVAL=$(whiptail --title "Check all desired apps/settings to be installed" \
-    --checklist "Custom Install Menu" 15 50 8 \
-    "a" "Custom Install menu -->" off \
-    "b" "Repair gnome-terminal locales - fix boxcutter" off \
-    "c" "Install Everything! - be careful!" off \
-    3>&1 1>&2 2>&3)
-    # Below you can enter the corresponding commands
-    case $RETVAL in
-        a) echo "custom menu goes here"; whiptail --title "cutom menu" --msgbox "goes here" 10 50;;
-        b) boxcutter_repair;;
-        c) fullyAutomaticShotgun;;
-        *) echo "Preprep has quit.";
-    esac
-  }
+function customize_menu {
+  RETVAL=$(whiptail --title "Custom Install Menu" \
+  --checklist "Select all desired apps/settings to be installed:" 20 50 8 \
+  "a" "mac menu -->" off \
+  "b" "Repair gnome-terminal locales" off \
+  "c" "Install Everything! - be careful!" off \
+  3>&1 1>&2 2>&3)
+  # Below you can enter the corresponding commands
+  case $RETVAL in
+      a) echo "mac menu goes here"; whiptail --title "cutom menu" --msgbox "goes here" 10 50;;
+      b) boxcutter_repair;;
+      c) fullyAutomaticShotgun;;
+      *) main_menu;
+  esac
+}
 
 
 ###>>>> this format works for whiptail menus >>>>>
