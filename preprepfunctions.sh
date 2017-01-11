@@ -47,6 +47,12 @@ function fix_locale {
   #sudo shutdown -r now;
 }
 
+function prep_reboot {
+  #extensible reboot routine.
+  #reboot the machine!
+  sudo shutdown -r now;
+}
+
 function boxcutter_repair {
   # repair routine for vagrant boxcutter/ubuntu1604-desktop
   echo "repairing terminal...";
@@ -71,12 +77,6 @@ function installGit {
   sudo apt-get -qq -y install git; wait;
   echo -ne "git installed!      \r";
   ###
-}
-
-function prep_reboot {
-  #extensible reboot routine.
-  #reboot the machine!
-  sudo shutdown -r now;
 }
 
 function installbmenu {
@@ -226,15 +226,34 @@ function fullyAutomaticShotgun {
 function customize_menu {
   RETVAL=$(whiptail --title "Custom Install Menu" \
   --checklist "Select all desired apps/settings to be installed:" 20 50 8 \
-  "a" "mac menu -->" off \
-  "b" "Repair gnome-terminal locales" off \
-  "c" "Install Everything! - be careful!" off \
+  "1." "mac menu -->" off \
+  "2." "Repair gnome-terminal locales" off \
+  "3." "build ~/gitstuff" off \
+  "4." "install preprep locally" off \
+  "5." "install bmenu" off \
+  "6." "set wallpaper: matrix" off \
+  "7." "take the redpill" off \
+  "8." "set wallpaper: mac" off \
+  "9." "install hangups - cli gchat" off \
+  "10." "install vncserver" off \
+  "11." "install espeak" off \
+  "12." "install ALL mac stuff" off \
   3>&1 1>&2 2>&3)
   # Below you can enter the corresponding commands
   case $RETVAL in
-      a) echo "mac menu goes here"; whiptail --title "cutom menu" --msgbox "goes here" 10 50;;
-      b) boxcutter_repair;;
-      c) fullyAutomaticShotgun;;
+      1.) echo "mac menu goes here"; whiptail --title "cutom menu" --msgbox "goes here" 10 50;;
+      2.) fix_locale;;
+      3.) gitstuffdir;;
+      4.) move_preprep_to_gitstuff;;
+      5.) installbmenu;;
+      6.) set_wallpaper_matrix;;
+      7.) redpill;;
+      8.) set_wallpaper_mac;;
+      9.) install_hangups;;
+      10.) install_vncserver;;
+      11.) install_espeak;;
+      12.) install_allmacstuff;;
+
       *) main_menu;
   esac
 }
@@ -245,20 +264,20 @@ function main_menu {
 
   RETVAL=$(whiptail --title "Make a selection and Enter" \
   --menu "Main Menu" 10 50 4 \
-  "a" "Custom Install menu -->" \
-  "b" "Repair gnome-terminal locales - fix boxcutter" \
-  "c" "Install Everything! - be careful!" \
-  "d" "quit preprep" \
+  "1." "Custom Install menu -->" \
+  "2." "Repair gnome-terminal locales - fix boxcutter" \
+  "3." "Install Everything! - be careful!" \
+  "4." "quit preprep" \
   3>&1 1>&2 2>&3)
 
   # Below you can enter the corresponding commands
 
   case $RETVAL in
       # a) echo "custom menu goes here"; whiptail --title "cutom menu" --msgbox "goes here" 10 50;;
-      a) customize_menu;;
-      b) boxcutter_repair;;
-      c) fullyAutomaticShotgun;;
-      d) echo "You have quit preprep.";;
+      1.) customize_menu;;
+      2.) boxcutter_repair;;
+      3.) fullyAutomaticShotgun;;
+      4.) echo "You have quit preprep.";;
       *) echo "Preprep has quit.";
   esac
   # c) echo "I Am The Machine!";;
