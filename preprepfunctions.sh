@@ -240,22 +240,34 @@ function customize_menu {
   "12." "install ALL mac stuff" off \
   3>&1 1>&2 2>&3)
   # Below you can enter the corresponding commands
-  case $RETVAL in
-      1.) echo "mac menu goes here"; whiptail --title "cutom menu" --msgbox "goes here" 10 50;;
-      2.) fix_locale;;
-      3.) gitstuffdir;;
-      4.) move_preprep_to_gitstuff;;
-      5.) installbmenu;;
-      6.) set_wallpaper_matrix;;
-      7.) redpill;;
-      8.) set_wallpaper_mac;;
-      9.) install_hangups;;
-      10.) install_vncserver;;
-      11.) install_espeak;;
-      12.) install_allmacstuff;;
 
-      *) main_menu;
-  esac
+  # http://www.gnu.org/software/bash/manual/bashref.html#Conditional-Constructs
+  # If the ‘;;’ operator is used, no subsequent matches are attempted after the first pattern match.
+  # Using ‘;&’ in place of ‘;;’ causes execution to continue with the command-list associated with the next clause, if any.
+  # Using ‘;;&’ in place of ‘;;’ causes the shell to test the patterns in the next clause, if any, and execute any associated command-list on a successful match.
+  echo $RETVAL "pre";
+
+  for thing in $RETVAL
+    do
+    echo $thing "thing"
+    case $thing in
+        1.) echo "mac menu goes here"; whiptail --title "cutom menu" --msgbox "goes here" 10 50;;
+        2.) fix_locale;;
+        3.) gitstuffdir;;
+        4.) move_preprep_to_gitstuff;;
+        5.) installbmenu;;
+        6.) set_wallpaper_matrix;;
+        7.) redpill;;
+        8.) set_wallpaper_mac;;
+        9.) install_hangups;;
+        10.) install_vncserver;;
+        11.) install_espeak;;
+        12.) install_allmacstuff;;
+
+        *) main_menu;
+    esac
+  done
+
 }
 
 
