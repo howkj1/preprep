@@ -240,7 +240,7 @@ function customize_menu {
   "12." "install ALL mac stuff" off \
   3>&1 1>&2 2>&3)
   # Below you can enter the corresponding commands
-  eval case $RETVAL in # FIXME this is super broken and won't let the script run!!!
+  case $RETVAL in
       1.) echo "mac menu goes here"; whiptail --title "cutom menu" --msgbox "goes here" 10 50;;
       2.) fix_locale;;
       3.) gitstuffdir;;
