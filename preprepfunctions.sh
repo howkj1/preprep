@@ -106,7 +106,7 @@ function set_wallpaper_matrix {
   # set wallpaper to Matrix
   echo "";
   echo -en "downloading matrix wallpaper\r";
-  wget -P ~/Pictures/ http://cdn.wonderfulengineering.com/wp-content/uploads/2014/04/code-wallpaper-16.jpg;
+  [ ! -f ~/Pictures/matrix.jpg ] && wget -P ~/Pictures/ http://cdn.wonderfulengineering.com/wp-content/uploads/2014/04/code-wallpaper-16.jpg;
   echo -en "renaming matrix wallpaper    \r";
   [ -f ~/Pictures/code-wallpaper-16.jpg ] && mv ~/Pictures/code-wallpaper-16.jpg ~/Pictures/matrix.jpg;
   echo -en "setting desktop wallpaper to matrix.jpg \r";
@@ -245,11 +245,9 @@ function customize_menu {
   # If the ‘;;’ operator is used, no subsequent matches are attempted after the first pattern match.
   # Using ‘;&’ in place of ‘;;’ causes execution to continue with the command-list associated with the next clause, if any.
   # Using ‘;;&’ in place of ‘;;’ causes the shell to test the patterns in the next clause, if any, and execute any associated command-list on a successful match.
-  echo $RETVAL "pre";
 
   for thing in $RETVAL
     do
-    echo $thing "thing"
     case $thing in
         1.) echo "mac menu goes here"; whiptail --title "cutom menu" --msgbox "goes here" 10 50;;
         2.) fix_locale;;
