@@ -161,7 +161,7 @@ function install_vncserver {
 
 function install_espeak {
   # It Talks!
-  sudo apt-get install espeak;
+  sudo apt-get -qq -y install espeak;
   espeak "you have been weighed"; wait 1;
   espeak "you have been measured"; wait 1;
   espeak "and you have been found wanting";
@@ -194,7 +194,7 @@ function ssh_keygen {
       echo "User selected Ok and entered " $your_email
       ssh-keygen -t rsa -b 4096 -C $your_email
       ssh-add ~/.ssh/id_rsa
-      sudo apt-get install xclip
+      sudo apt-get -qq -y install xclip
       xclip -sel clip < ~/.ssh/id_rsa.pub
   else
       echo "User selected Cancel."
@@ -204,7 +204,7 @@ function ssh_keygen {
 
 function install_dconf_editor {
   # dconf-editor is a gui registry editor
-  sudo apt-get install dconf-editor;
+  sudo apt-get -qq -y install dconf-editor;
 }
 
 function install_spotify {
@@ -217,7 +217,7 @@ function install_spotify {
   # 3. Update list of available packages
   sudo apt-get update
   # 4. Install Spotify
-  sudo apt-get install spotify-client;
+  sudo apt-get -qq -y install spotify-client;
 }
 
 function install_redshift {
@@ -226,19 +226,20 @@ function install_redshift {
     # http://ubuntuhandbook.org/index.php/2016/03/install-f-lux-in-ubuntu-16-04/
     # sudo add-apt-repository ppa:nathan-renniewaldock/flux
     # sudo apt-get install fluxgui ;
-  sudo apt-get install redshift redshift-gtk ;
+  sudo apt-get -qq -y install redshift redshift-gtk ;
+  # https://github.com/jonls/redshift/issues/158
 }
 
 function install_openssh {
   # openssh server
-  sudo apt-get install openssh-server ;
+  sudo apt-get -qq -y install openssh-server ;
 }
 
 function install_nautilus_image_manipulator {
   # adds image editing functions directly into nautilus file browser
   # these are similar to Mac Finder automation options
   # this tool can help you create thumbnails extremely quick
-  sudo apt-get install nautilus-image-manipulator nautilus-image-converter;
+  sudo apt-get -qq -y install nautilus-image-manipulator nautilus-image-converter;
   sudo killall nautilus;
 }
 
@@ -248,7 +249,7 @@ function install_pyrenamer {
   # or you could skip this and use rename function:
   # rename 's\thumb/\thmb/' *
 
-  sudo apt-get install pyrenamer;
+  sudo apt-get -qq -y install pyrenamer;
   # pyrenamer ;
 }
 
@@ -263,12 +264,12 @@ function install_atom {
 
 function install_chromium {
   # chromium open source browser
-  sudo apt-get install chromium-browser;
+  sudo apt-get -qq -y install chromium-browser;
 }
 
 function install_slack {
   # slack chat messenger
-  sudo apt-get install slack;
+  sudo apt-get -qq -y install slack;
 }
 
 function preproutine {
