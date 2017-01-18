@@ -71,7 +71,7 @@ function install_applelogolauncher {
   sudo mv launcher_bfb.png /usr/share/unity/icons/;
 }
 
-function install_tools {
+function install_tweak_tools {
   sudo apt-get -y install unity-tweak-tool;
   sudo apt-get -y install gnome-tweak-tool;
 }
@@ -116,7 +116,7 @@ function install_allmacstuff {
   install_dock;
   # install_applemenu;
   install_applelogolauncher;
-  install_tools;
+  install_tweak_tools;
   install_librefonts;
   install_macfonts;
   set_macthemes;

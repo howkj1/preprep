@@ -18,7 +18,7 @@ prepDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
 # install_ppa; / install_mac_wallpapers; / install_macbuntuTheme;
 # install_icons; / install_cursors; / install_launchpad;
 # install_spotlight; / install_dock; / install_applemenu;
-# install_applelogolauncher; / install_tools; / install_librefonts;
+# install_applelogolauncher; / install_tweak_tools; / install_librefonts;
 # install_macfonts; / install_allmacstuff;
 ## end of macify.sh ##
 #### end of imports ####
@@ -184,6 +184,93 @@ function redpill {
   echo "red pill";
 }
 
+function ssh_keygen {
+  #generate ssh rsa keys
+  your_email=$(whiptail --inputbox "Enter your full email address (yourname@gmail.com)" 8 78 email --title "SSH KeyGen" \
+  3>&1 1>&2 2>&3)
+  # A trick to swap stdout and stderr.
+  exitstatus=$?
+  if [ $exitstatus = 0 ]; then
+      echo "User selected Ok and entered " $your_email
+      ssh-keygen -t rsa -b 4096 -C $your_email
+      ssh-add ~/.ssh/id_rsa
+      sudo apt-get install xclip
+      xclip -sel clip < ~/.ssh/id_rsa.pub
+  else
+      echo "User selected Cancel."
+  fi
+  # echo "(Exit status was $exitstatus)"
+}
+
+function install_dconf_editor {
+  # dconf-editor is a gui registry editor
+  sudo apt-get install dconf-editor;
+}
+
+function install_spotify {
+  # Spotify music player
+  # https://www.spotify.com/us/download/linux/
+  # 1. Add the Spotify repository signing key to be able to verify downloaded packages
+  sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886
+  # 2. Add the Spotify repository
+  echo deb http://repository.spotify.com stable non-free | sudo tee /etc/apt/sources.list.d/spotify.list
+  # 3. Update list of available packages
+  sudo apt-get update
+  # 4. Install Spotify
+  sudo apt-get install spotify-client;
+}
+
+function install_redshift {
+  # redshift reduces eyestrain by modifying display colors
+  # redshift is an alternative to f.lux (flux)
+    # http://ubuntuhandbook.org/index.php/2016/03/install-f-lux-in-ubuntu-16-04/
+    # sudo add-apt-repository ppa:nathan-renniewaldock/flux
+    # sudo apt-get install fluxgui ;
+  sudo apt-get install redshift redshift-gtk ;
+}
+
+function install_openssh {
+  # openssh server
+  sudo apt-get install openssh-server ;
+}
+
+function install_nautilus_image_manipulator {
+  # adds image editing functions directly into nautilus file browser
+  # these are similar to Mac Finder automation options
+  # this tool can help you create thumbnails extremely quick
+  sudo apt-get install nautilus-image-manipulator nautilus-image-converter;
+  sudo killall nautilus;
+}
+
+function install_pyrenamer {
+  # pyrenamer can quickly rename files in a folder given a pattern
+  # example is renaming all .jpeg to .jpg
+  # or you could skip this and use rename function:
+  # rename 's\thumb/\thmb/' *
+
+  sudo apt-get install pyrenamer;
+  # pyrenamer ;
+}
+
+function install_atom {
+  # http://tipsonubuntu.com/2016/08/05/install-atom-text-editor-ubuntu-16-04/
+  # https://github.com/atom/atom
+  # https://atom.io/
+  sudo add-apt-repository ppa:webupd8team/atom;
+  sudo apt update;
+  sudo apt install atom;
+}
+
+function install_chromium {
+  # chromium open source browser
+  sudo apt-get install chromium-browser;
+}
+
+function install_slack {
+  # slack chat messenger
+  sudo apt-get install slack;
+}
+
 function preproutine {
   echo;
   echo -ne "starting preproutine... \r";
@@ -226,7 +313,7 @@ function fullyAutomaticShotgun {
 function customize_menu {
   RETVAL=$(whiptail --title "Custom Install Menu" \
   --checklist --separate-output "Select all desired apps/settings to be installed:" 20 50 8 \
-  "1." "mac menu -->" off \
+  "1." "apt-get update" off \
   "2." "Repair gnome-terminal locales" off \
   "3." "build ~/gitstuff" off \
   "4." "install preprep locally" off \
@@ -238,6 +325,28 @@ function customize_menu {
   "10." "install vncserver" off \
   "11." "install espeak" off \
   "12." "install ALL mac stuff" off \
+  "13." "|- install noobslab ppa" off \
+  "14." "|- install mac wallpapers" off \
+  "15." "|- install mac theme" off \
+  "16." "|- install mac icons" off \
+  "17." "|- install launchpad" off \
+  "18." "|- install spotlight" off \
+  "19." "|- install dock" off \
+  "20." "|- install apple logo" off \
+  "21." "|- install tweak tools" off \
+  "22." "|- install libre fonts" off \
+  "23." "|- install mac fonts" off \
+  "24." "|- set mac themes" off \
+  "25." "ssh rsa keygen" off \
+  "26." "install dconf-editor" off \
+  "27." "install spotify" off \
+  "28." "install redshift" off \
+  "29." "install openssh server" off \
+  "30." "install nautilus image editing" off \
+  "31." "install pyrenamer" off \
+  "32." "install Atom IDE" off \
+  "33." "install chromium browser" off \
+  "34." "install slack chat" off \
   3>&1 1>&2 2>&3)
   # Below you can enter the corresponding commands
 
@@ -249,7 +358,8 @@ function customize_menu {
   for thing in $RETVAL
     do
     case $thing in
-        1.) echo "mac menu goes here"; whiptail --title "cutom menu" --msgbox "goes here" 10 50;;
+        # 1.) echo "mac menu goes here"; whiptail --title "cutom menu" --msgbox "goes here" 10 50;;
+        1.) sudo apt-get update;;
         2.) fix_locale;;
         3.) gitstuffdir;;
         4.) move_preprep_to_gitstuff;;
@@ -261,8 +371,30 @@ function customize_menu {
         10.) install_vncserver;;
         11.) install_espeak;;
         12.) install_allmacstuff;;
+        13.) install_ppa;;
+        14.) install_mac_wallpapers;;
+        15.) install_macbuntuTheme;;
+        16.) install_icons;;
+        17.) install_launchpad;;
+        18.) install_spotlight;;
+        19.) install_dock;;
+        20.) install_applelogolauncher;;
+        21.) install_tweak_tools;;
+        22.) install_librefonts;;
+        23.) install_macfonts;;
+        24.) set_macthemes;;
+        25.) ssh_keygen;;
+        26.) install_dconf_editor;;
+        27.) install_spotify;;
+        28.) install_redshift;;
+        29.) install_openssh;;
+        30.) install_nautilus_image_manipulator;;
+        31.) install_pyrenamer;;
+        32.) install_atom;;
+        33.) install_chromium;;
+        34.) install_slack;;
 
-        *) main_menu;
+        *) main_menu;;
     esac
   done
 
