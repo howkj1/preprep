@@ -293,12 +293,29 @@ function preproutine {
 
 function fullyAutomaticShotgun {
   # installGit; #comes standard on ubuntu1604-desktop ?
-  # TODO full auto needs some updating once custom menu is done being built!
   preproutine;
-  gitstuffdir;
-  set_wallpaper_mac;
-  install_allmacstuff;
-  install_hangups;
+
+  sudo apt-get update;;
+  fix_locale;;
+  gitstuffdir;;
+  move_preprep_to_gitstuff;;
+  installbmenu;;
+  set_wallpaper_matrix;;
+  install_allmacstuff;;
+  install_hangups;;
+  install_vncserver;;
+  ssh_keygen;;
+  install_dconf_editor;;
+  install_nautilus_image_manipulator;;
+  install_redshift;;
+  install_openssh;;
+  install_chromium;;
+  install_atom;;
+  install_pyrenamer;;
+  install_slack;;
+  install_spotify;;
+  install_espeak;;
+
   echo "Bang!";
 }
 
