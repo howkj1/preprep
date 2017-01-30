@@ -151,6 +151,11 @@ function install_hangups {
   # cd ~/gitstuff/preprep/;
 }
 
+function autohide_launcher {
+  # set Ubuntu Unity Launcher to Auto-hide
+  gsettings set org.compiz.unityshell:/org/compiz/profiles/unity/plugins/unityshell/ launcher-hide-mode 1
+}
+
 function install_vncserver {
   echo;
   echo "installing tightvncserver...";
@@ -303,6 +308,7 @@ function fullyAutomaticShotgun {
   set_wallpaper_matrix;
   install_allmacstuff;
   install_hangups;
+  autohide_launcher;
   install_vncserver;
   ssh_keygen;
   install_dconf_editor;
@@ -365,6 +371,7 @@ function customize_menu {
   "32." "install Atom IDE" off \
   "33." "install chromium browser" off \
   "34." "install slack chat" off \
+  "35." "set autohide Unity launcher" off \
   3>&1 1>&2 2>&3)
   # Below you can enter the corresponding commands
 
@@ -411,6 +418,7 @@ function customize_menu {
         32.) install_atom;;
         33.) install_chromium;;
         34.) install_slack;;
+        35.) autohide_launcher;;
 
         *) main_menu;;
     esac
