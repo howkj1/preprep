@@ -289,11 +289,11 @@ function preproutine {
   echo -ne 'here we go... ... ... ...\r';
   echo -ne '\n';
 
-  gitstuffdir;wait;
-  installbmenu;wait;
+  # gitstuffdir;wait;
+  # installbmenu;wait;
 
-  echo;
-  echo "Preprep has finished!";
+  # echo;
+  # echo "Preprep has finished!";
 }
 
 function fullyAutomaticShotgun {
@@ -335,7 +335,7 @@ function fullyAutomaticShotgun {
   # quit
 
 function customize_menu {
-  RETVAL=$(whiptail --title "Custom Install Menu" \
+  RETVAL=$(whiptail --notags --title "Custom Install Menu" \
   --checklist --separate-output "Select all desired apps/settings to be installed:" 20 50 8 \
   "1." "apt-get update" off \
   "2." "Repair gnome-terminal locales" off \
