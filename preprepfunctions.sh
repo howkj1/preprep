@@ -335,8 +335,8 @@ function fullyAutomaticShotgun {
   # quit
 
 function customize_menu {
-  RETVAL=$(whiptail --notags --title "Custom Install Menu" \
-  --checklist --separate-output "Select all desired apps/settings to be installed:" 20 50 8 \
+  RETVAL=$(whiptail --title "Custom Install Menu" \
+  --checklist --notags --separate-output "Select all desired apps/settings to be installed:" 20 50 8 \
   "1." "apt-get update" off \
   "2." "Repair gnome-terminal locales" off \
   "3." "build ~/gitstuff" off \
