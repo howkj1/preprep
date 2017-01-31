@@ -58,12 +58,13 @@ function boxcutter_repair {
   echo "repairing terminal...";
   echo "please wait...";
   fix_locale;
-  move_preprep_to_gitstuff;
-  echo "rebooting...";sleep .5;
-  echo "please run preprep after reboot to finish routines.";
-  echo "~/gitstuff/preprep/preprep.sh";
-  sleep 3;
-  prep_reboot;
+  # move_preprep_to_gitstuff;
+  # echo "rebooting...";sleep .5;
+  echo "please logout or reboot to finish locale repair.";
+  # echo "please run preprep after reboot to finish routines.";
+  # echo "~/gitstuff/preprep/preprep.sh";
+  # sleep 3;
+  # prep_reboot;
 }
 
 function installGit {
