@@ -292,6 +292,12 @@ function install_sheepit {
 }
 
 
+function install_tmux {
+  #install tmux
+  sudo apt -qq -y install tmux;
+}
+
+
 function preproutine {
   echo;
   echo -ne "starting preproutine... \r";
@@ -389,6 +395,7 @@ function customize_menu {
   "35." "set autohide Unity launcher" off \
   "36." "install java jre 8" off \
   "37." "install sheepit render client" off \
+  "38." "install tmux" off \
   3>&1 1>&2 2>&3)
   # Below you can enter the corresponding commands
 
@@ -438,6 +445,7 @@ function customize_menu {
         35.) autohide_launcher;;
         36.) install_javajre;;
         37.) install_sheepit;;
+        38.) install_tmux;;
 
         *) main_menu;;
     esac
