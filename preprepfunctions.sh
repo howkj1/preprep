@@ -278,6 +278,20 @@ function install_slack {
   sudo apt-get -qq -y install slack;
 }
 
+function install_javajre {
+  #install java jre 8
+  sudo apt -qq -y install openjdk-8-jre-headless;
+}
+
+function install_sheepit {
+  # sheepit render farm client
+  echo "";
+  echo -en "downloading sheepit render client\r";
+  [ ! -f ~/sheepit-client-5.590.2883.jar ] && wget -P ~/ https://www.sheepit-renderfarm.com/media/applet/sheepit-client-5.590.2883.jar;
+  echo "sheepit client installed.                    ";
+}
+
+
 function preproutine {
   echo;
   echo -ne "starting preproutine... \r";
@@ -373,6 +387,8 @@ function customize_menu {
   "33." "install chromium browser" off \
   "34." "install slack chat" off \
   "35." "set autohide Unity launcher" off \
+  "36." "install java jre 8" off \
+  "37." "install sheepit render client" off \
   3>&1 1>&2 2>&3)
   # Below you can enter the corresponding commands
 
@@ -420,6 +436,8 @@ function customize_menu {
         33.) install_chromium;;
         34.) install_slack;;
         35.) autohide_launcher;;
+        36.) install_javajre;;
+        37.) install_sheepit;;
 
         *) main_menu;;
     esac
