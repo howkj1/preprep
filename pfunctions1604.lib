@@ -1,0 +1,258 @@
+#!/bin/bash
+
+# preprepfunctions.sh is a helper for preprep.sh
+# preprepfunctions.sh should be called from the preprep utilities
+# and is not meant to be a standalone script.
+#
+# git clone https://github.com/howkj1/preprep.git
+#
+
+## begin magical code land ##
+
+####    imports    ####
+prepDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
+
+. $prepDIR/macify.sh --source-only;
+. $prepDIR/commonfunctions.lib --source-only;
+
+#### end of imports ####
+
+function set_wallpaper_matrix16 {
+  # set wallpaper to Matrix
+  echo "";
+  echo -en "downloading matrix wallpaper\r";
+  [ ! -f ~/Pictures/matrix.jpg ] && wget -P ~/Pictures/ http://cdn.wonderfulengineering.com/wp-content/uploads/2014/04/code-wallpaper-16.jpg;
+  echo -en "renaming matrix wallpaper    \r";
+  [ -f ~/Pictures/code-wallpaper-16.jpg ] && mv ~/Pictures/code-wallpaper-16.jpg ~/Pictures/matrix.jpg;
+  echo -en "setting desktop wallpaper to matrix.jpg \r";
+  # [ -f ~/Pictures/matrix.jpg ] && gsettings set org.gnome.desktop.background picture-uri file://~/Pictures/matrix.jpg;
+  [ -f ~/Pictures/matrix.jpg ] && gsettings set org.gnome.desktop.background picture-uri file:///home/$USER/Pictures/matrix.jpg;
+  echo "wallpaper set to: Matrix                    ";
+}
+
+function enter_matrix16 {
+  # Quote of the day :
+  # "All the colors went everywhere! - Josh McCall"
+
+  # Enter The Matrix
+    echo -e "\033[2J\033[?25l"; R=`tput lines` C=`tput cols`;: $[R--] ; while true
+    do ( e=echo\ -e s=sleep j=$[RANDOM%C] d=$[RANDOM%R];for i in `eval $e {1..$R}`;
+    do c=`printf '\\\\0%o' $[RANDOM%57+33]` ### http://bruxy.regnet.cz/web/linux ###
+    $e "\033[$[i-1];${j}H\033[32m$c\033[$i;${j}H\033[37m"$c; $s 0.1;if [ $i -ge $d ]
+    then $e "\033[$[i-d];${j}H ";fi;done;for i in `eval $e {$[i-d]..$R}`; #[mat!rix]
+    do echo -e "\033[$i;${j}f ";$s 0.1;done)& sleep 0.05;done #(c) 2011 -- [ BruXy ]
+}
+
+function set_wallpaper_mac16 {
+  # set wallpaper to Matrix
+  echo "";
+  [ -f ~/Pictures/mbuntu-3.jpg ] && gsettings set org.gnome.desktop.background picture-uri file:///home/$USER/Pictures/mbuntu-3.jpg;
+  echo "wallpaper set to: mac";
+}
+
+function autohide_launcher16 {
+  # set Ubuntu Unity Launcher to Auto-hide
+  gsettings set org.compiz.unityshell:/org/compiz/profiles/unity/plugins/unityshell/ launcher-hide-mode 1
+}
+
+function redpill16 {
+  # example background process
+  set_wallpaper_matrix;
+  enter_matrix &
+  # get the PID
+  BG_PID=$!
+  ### HERE, YOU TELL THE SHELL TO NOT CARE ANY MORE ###
+  disown $BG_PID
+  ###
+  sleep 5s;
+  # kill it, hard and mercyless, now without a trace
+  kill -9 $BG_PID;
+  sleep 4;
+  clear;
+  echo "red pill";
+}
+
+function install_spotify16 {
+  # Spotify music player
+  # https://www.spotify.com/us/download/linux/
+  # 1. Add the Spotify repository signing key to be able to verify downloaded packages
+  sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886
+  # 2. Add the Spotify repository
+  echo deb http://repository.spotify.com stable non-free | sudo tee /etc/apt/sources.list.d/spotify.list
+  # 3. Update list of available packages
+  sudo apt-get update
+  # 4. Install Spotify
+  sudo apt-get -qq -y install spotify-client;
+}
+
+function install_atom16 {
+  # http://tipsonubuntu.com/2016/08/05/install-atom-text-editor-ubuntu-16-04/
+  # https://github.com/atom/atom
+  # https://atom.io/
+  sudo add-apt-repository ppa:webupd8team/atom;
+  sudo apt update;
+  sudo apt install atom;
+}
+
+function install_chromium16 {
+  # chromium open source browser
+  sudo apt-get -qq -y install chromium-browser;
+}
+
+function install_slack16 {
+  # slack chat messenger
+  sudo apt-get -qq -y install slack;
+}
+
+function install_tmux16 {
+  #install tmux
+  sudo apt -qq -y install tmux;
+}
+
+function install_hangups16 {
+  # hangups = google hangouts for cli terminals
+  # https://hangups.readthedocs.io/en/stable/installation.html
+  echo -ne "installing hangups... \r"
+  # [ -d ~/gitstuff ] && cd ~/gitstuff;
+  # git clone https://github.com/tdryer/hangups.git;
+  # cd ~/gitstuff/hangups/;
+  sudo apt-get -qq -y install python3-pip;
+  pip3 install hangups;
+  # pip install --upgrade pip;
+  # pip3 install --upgrade pip;
+  echo;
+  echo "hangups installed.         ";
+  # cd ~/gitstuff/preprep/;
+}
+
+
+
+# main menu
+  # custom
+  # repair
+    ##--> checkbox menu
+      ###--> macify sub checkbox menu? (or just show all?)
+  # auto # TODO whiptail progress bar for auto.
+  # quit
+
+function customize_menu16 {
+  RETVAL=$(whiptail --title "16.04 Custom Install Menu" \
+  --checklist --separate-output "Select all desired apps/settings to be installed:" 20 50 8 \
+  "1." "apt-get update" off \
+  "2." "Repair gnome-terminal locales" off \
+  "3." "build ~/gitstuff" off \
+  "4." "install preprep locally" off \
+  "5." "install bmenu" off \
+  "6." "set wallpaper: matrix" off \
+  "7." "take the redpill" off \
+  "8." "set wallpaper: mac" off \
+  "9." "install hangups - cli gchat" off \
+  "10." "install vncserver" off \
+  "11." "install espeak" off \
+  "12." "install ALL mac stuff" off \
+  "13." "|- install noobslab ppa" off \
+  "14." "|- install mac wallpapers" off \
+  "15." "|- install mac theme" off \
+  "16." "|- install mac icons" off \
+  "17." "|- install launchpad" off \
+  "18." "|- install spotlight" off \
+  "19." "|- install dock" off \
+  "20." "|- install apple logo" off \
+  "21." "|- install tweak tools" off \
+  "22." "|- install libre fonts" off \
+  "23." "|- install mac fonts" off \
+  "24." "|- set mac themes" off \
+  "25." "ssh rsa keygen" off \
+  "26." "install dconf-editor" off \
+  "27." "install spotify" off \
+  "28." "install redshift" off \
+  "29." "install openssh server" off \
+  "30." "install nautilus image editing" off \
+  "31." "install pyrenamer" off \
+  "32." "install Atom IDE" off \
+  "33." "install chromium browser" off \
+  "34." "install slack chat" off \
+  "35." "set autohide Unity launcher" off \
+  "36." "install java jre 8" off \
+  "37." "install sheepit render client" off \
+  "38." "install tmux" off \
+  3>&1 1>&2 2>&3)
+  # Below you can enter the corresponding commands
+
+  # http://www.gnu.org/software/bash/manual/bashref.html#Conditional-Constructs
+  # If the ‘;;’ operator is used, no subsequent matches are attempted after the first pattern match.
+  # Using ‘;&’ in place of ‘;;’ causes execution to continue with the command-list associated with the next clause, if any.
+  # Using ‘;;&’ in place of ‘;;’ causes the shell to test the patterns in the next clause, if any, and execute any associated command-list on a successful match.
+
+  for thing in $RETVAL
+    do
+    case $thing in
+        # 1.) echo "mac menu goes here"; whiptail --title "cutom menu" --msgbox "goes here" 10 50;;
+        1.) sudo apt-get update;;
+        2.) fix_locale;;
+        3.) gitstuffdir;;
+        4.) move_preprep_to_gitstuff;;
+        5.) installbmenu;;
+        6.) set_wallpaper_matrix;;
+        7.) redpill;;
+        8.) set_wallpaper_mac;;
+        9.) install_hangups;;
+        10.) install_vncserver;;
+        11.) install_espeak;;
+        12.) install_allmacstuff;;
+        13.) install_ppa;;
+        14.) install_mac_wallpapers;;
+        15.) install_macbuntuTheme;;
+        16.) install_icons;;
+        17.) install_launchpad;;
+        18.) install_spotlight;;
+        19.) install_dock;;
+        20.) install_applelogolauncher;;
+        21.) install_tweak_tools;;
+        22.) install_librefonts;;
+        23.) install_macfonts;;
+        24.) set_macthemes;;
+        25.) ssh_keygen;;
+        26.) install_dconf_editor;;
+        27.) install_spotify;;
+        28.) install_redshift;;
+        29.) install_openssh;;
+        30.) install_nautilus_image_manipulator;;
+        31.) install_pyrenamer;;
+        32.) install_atom;;
+        33.) install_chromium;;
+        34.) install_slack;;
+        35.) autohide_launcher;;
+        36.) install_javajre;;
+        37.) install_sheepit;;
+        38.) install_tmux;;
+        *) echo "You have quit preprep.";
+    esac
+  done
+
+}
+
+
+###>>>> this format works for whiptail menus >>>>>
+function main_menu_1604 {
+
+  RETVAL=$(whiptail --title "Make a selection and Enter" \
+  --menu "Main Menu 16.04" 10 50 5 \
+  "1." "Custom Install menu -->" \
+  "2." "Repair gnome-terminal locales - fix boxcutter" \
+  "3." "Install Everything! - be careful!" \
+  3>&1 1>&2 2>&3)
+
+  # Below you can enter the corresponding commands
+
+  case $RETVAL in
+      # a) echo "custom menu goes here"; whiptail --title "cutom menu" --msgbox "goes here" 10 50;;
+      1.) customize_menu16;;
+      2.) boxcutter_repair;;
+      3.) fullyAutomaticShotgun;;
+      *) echo "You have quit preprep."
+  esac
+  # c) echo "I Am The Machine!";;
+
+}
+###<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<

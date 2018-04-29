@@ -1,0 +1,213 @@
+#!/bin/bash
+
+# preprepfunctions is a helper for preprep.sh
+# preprepfunctions should be called from the preprep utilities
+# and is not meant to be a standalone script.
+#
+# git clone https://github.com/howkj1/preprep.git
+#
+
+## begin magical code land ##
+
+####    imports    ####
+prepDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
+## example.sh ##
+# . $prepDIR/example.sh --source-only;
+## end of example.sh ##
+
+#### end of imports ####
+
+function installGit {
+  clear;
+  ### this block installs git
+  # TODO until script is updated to check if git is installed
+  echo;echo "checking for updates... ";
+  sudo apt-get -qq update > /dev/null  2>&1; wait;
+  echo -ne "...                                 \r";
+  echo -ne "installing git... \r";
+  sudo apt-get -qq -y install git; wait;
+  echo -ne "git installed!      \r";
+  ###
+}
+
+function gitstuffdir {
+  echo -ne "...                                 \r";
+  echo -ne "making gitstuff folder... \r";sleep 1;
+  [ ! -d ~/gitstuff ] && mkdir ~/gitstuff;
+  echo -ne "opening gitstuff folder... \r"; sleep 1;
+  cd ~/gitstuff;
+}
+
+function move_preprep_to_gitstuff {
+  # moves, copies, or clones preprep scripts and deps into ~/gitstuff/preprep/
+  echo "creating local preprep in ~/gitstuff/preprep/";
+  gitstuffdir;
+  [ ! -d ~/gitstuff/preprep ] && cd ~/gitstuff && git clone https://github.com/howkj1/preprep.git;
+}
+
+function fix_locale {
+  # fixes: vagrant boxcutter/ubuntu1604-desktop
+  # failure to load gnome-terminal
+  # http://askubuntu.com/questions/765580/ubuntu-16-04-live-usb-gnome-terminal-not-opening-by-any-means
+  sudo locale-gen "en_US.UTF-8";
+  sudo localectl set-locale LANG="en_US.UTF-8";
+  #sudo shutdown -r now;
+}
+
+function prep_reboot {
+  #extensible reboot routine.
+  #reboot the machine!
+  sudo shutdown -r now;
+}
+
+function boxcutter_repair {
+  # repair routine for vagrant boxcutter/ubuntu1604-desktop
+  echo "repairing terminal...";
+  echo "please wait...";
+  fix_locale;
+  # move_preprep_to_gitstuff;
+  # echo "rebooting...";sleep .5;
+  echo "please logout or reboot to finish locale repair.";
+  # echo "please run preprep after reboot to finish routines.";
+  # echo "~/gitstuff/preprep/preprep.sh";
+  # sleep 3;
+  # prep_reboot;
+}
+
+function installbmenu {
+  # Installs and launches bmenu
+  # this could be modified to strictly use whiptail instead
+  # but I like bmenu and want it available, so here it is.
+  [ ! -d ~/gitstuff ] && gitstuffdir; #might be overkill?
+  echo -ne "...                                 \r";
+  echo -ne "installing bmenu... \r"; sleep 1;
+  cd ~/gitstuff/;
+  [ ! -d ~/gitstuff/bmenu ] && sudo apt-get -y install libncurses5-dev libncursesw5-dev;
+  [ ! -d ~/gitstuff/bmenu ] && git clone https://github.com/bartobri/bmenu.git;wait;
+  echo -ne "locating bmenu src... \r"; sleep 1;
+  cd ~/gitstuff/bmenu/src/;
+  echo -ne "building bmenu app... \r"; sleep 1;
+  make; wait;
+  echo -ne "...                                 \r";
+  echo -ne "installing bmenu... \r"; sleep 1;
+  sudo cp ./bmenu /usr/bin/;
+  echo -ne "...                                 \r";
+  echo -ne "bmenu installed! \r";sleep 1;
+  # echo "Please run the following to continue setup:"
+  # echo "  bmenu -c ~/gitstuff/preprep/.bmenu "
+}
+
+function install_vncserver {
+  echo;
+  echo "installing tightvncserver...";
+  sudo apt-get -qq -y install tightvncserver;
+  echo;
+  echo "tightvncserver installed.";
+}
+
+function install_espeak {
+  # It Talks!
+  sudo apt-get -qq -y install espeak;
+  espeak "you have been weighed"; wait 1;
+  espeak "you have been measured"; wait 1;
+  espeak "and you have been found wanting";
+}
+
+function ssh_keygen {
+  #generate ssh rsa keys
+  your_email=$(whiptail --inputbox "Enter your full email address (yourname@gmail.com)" 8 78 email --title "SSH KeyGen" \
+  3>&1 1>&2 2>&3)
+  # A trick to swap stdout and stderr.
+  exitstatus=$?
+  if [ $exitstatus = 0 ]; then
+      echo "User selected Ok and entered " $your_email
+      ssh-keygen -t rsa -b 4096 -C $your_email
+      ssh-add ~/.ssh/id_rsa
+      sudo apt-get -qq -y install xclip
+      xclip -sel clip < ~/.ssh/id_rsa.pub
+  else
+      echo "User selected Cancel."
+  fi
+  # echo "(Exit status was $exitstatus)"
+}
+
+function install_dconf_editor {
+  # dconf-editor is a gui registry editor
+  sudo apt-get -qq -y install dconf-editor;
+}
+
+function install_redshift {
+  # redshift reduces eyestrain by modifying display colors
+  # redshift is an alternative to f.lux (flux)
+    # http://ubuntuhandbook.org/index.php/2016/03/install-f-lux-in-ubuntu-16-04/
+    # sudo add-apt-repository ppa:nathan-renniewaldock/flux
+    # sudo apt-get install fluxgui ;
+  sudo apt-get -qq -y install redshift redshift-gtk ;
+  # https://github.com/jonls/redshift/issues/158
+}
+
+function install_openssh {
+  # openssh server
+  sudo apt-get -qq -y install openssh-server ;
+}
+
+function install_nautilus_image_manipulator {
+  # adds image editing functions directly into nautilus file browser
+  # these are similar to Mac Finder automation options
+  # this tool can help you create thumbnails extremely quick
+  sudo apt-get -qq -y install nautilus-image-manipulator nautilus-image-converter;
+  sudo killall nautilus;
+}
+
+function install_pyrenamer {
+  # pyrenamer can quickly rename files in a folder given a pattern
+  # example is renaming all .jpeg to .jpg
+  # or you could skip this and use rename function:
+  # rename 's\thumb/\thmb/' *
+  sudo apt-get -qq -y install pyrenamer;
+  # pyrenamer ;
+}
+
+function install_blender {
+  sudo apt install blender blender-data;
+}
+
+function install_javajre {
+  #install java jre 8
+  sudo apt -qq -y install openjdk-8-jre-headless;
+}
+
+function install_sheepit {
+  # sheepit render farm client
+  echo "";
+  echo -en "downloading sheepit render client\r";
+  [ ! -f ~/sheepit-client-*.jar ] && wget -P ~/ https://www.sheepit-renderfarm.com/media/applet/client-latest.php;
+  echo "sheepit client installed.                    ";
+}
+
+function preproutine {
+  echo;
+  echo -ne "starting preproutine... \r";
+  echo -ne 'here we go... \r';
+  sleep .5;
+  echo -ne 'here we go... ... \r';
+  sleep .5;
+  echo -ne 'here we go... ... ... \r';
+  sleep .5;
+  echo -ne 'here we go... ... ... ...\r';
+  echo -ne '\n';
+
+  # gitstuffdir;wait;
+  # installbmenu;wait;
+
+  # echo;
+  # echo "Preprep has finished!";
+}
+
+# main menu
+  # custom
+  # repair
+    ##--> checkbox menu
+      ###--> macify sub checkbox menu? (or just show all?)
+  # auto # TODO whiptail progress bar for auto.
+  # quit

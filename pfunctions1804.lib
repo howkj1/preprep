@@ -1,0 +1,314 @@
+#!/bin/bash
+
+# preprepfunctions is a helper for preprep.sh
+# preprepfunctions should be called from the preprep utilities
+# and is not meant to be a standalone script.
+#
+# git clone https://github.com/howkj1/preprep.git
+#
+
+## begin magical code land ##
+
+####    imports    ####
+prepDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
+
+# ## commonfunctiohs.lib ##
+# . $prepDIR/commonfunctions.lib --source-only;
+. $prepDIR/commonfunctions.lib --source-only;
+##
+
+#### end of imports ####
+
+function install_spotify18 {
+  # Spotify music player
+  # https://www.spotify.com
+  snap install spotify;
+}
+
+function install_atom18 {
+  # http://tipsonubuntu.com/2016/08/05/install-atom-text-editor-ubuntu-16-04/
+  # https://github.com/atom/atom
+  # https://atom.io/
+  snap install --classic atom;
+}
+
+function install_chromium18 {
+  # chromium open source browser
+  snap install chromium-browser;
+}
+
+function install_googlechrome18 {
+  # Google Chrome
+  sudo apt install gdebi-core;
+  wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb;
+  sudo gdebi google-chrome-stable_current_amd64.deb;
+  # cleanup
+  rm ./google-chrome-stable_current_amd64;
+}
+
+function install_slack18 {
+  # slack chat messenger
+  snap install slack;
+}
+
+function install_hangups18 {
+  # hangups = google hangouts for cli terminals
+  snap install hangups;
+}
+
+function install_tmux18 {
+  #install tmux
+  snap install tmux;
+}
+
+function install_obs18 {
+  #install obs studio
+  snap install obs-studio;
+}
+
+function install_discord18 {
+  #install discord chat
+  snap install discord;
+}
+
+function install_vlc18 {
+  #vlc media player
+  snap install vlc;
+}
+
+function install_gimp18 {
+  #gimp
+  snap install gimp;
+}
+
+function install_ora18 {
+  #ora task manager
+  snap install ora;
+}
+
+function install_lutris18 {
+  # Lutris game manager
+  ver=$(lsb_release -sr); if [ $ver != "18.04" -a $ver != "17.10" -a $ver != "17.04" -a $ver != "16.04" ]; then ver=18.04; fi ;
+
+  echo "deb http://download.opensuse.org/repositories/home:/strycore/xUbuntu_$ver/ ./" | sudo tee /etc/apt/sources.list.d/lutris.list ;
+
+  wget -q http://download.opensuse.org/repositories/home:/strycore/xUbuntu_$ver/Release.key -O- | sudo apt-key add - ;
+
+  sudo apt update;
+  sudo apt install lutris;
+}
+
+function install_compiztools18 {
+  # compiz tools
+  sudo apt install compiz compiz-gnome compizconfig-settings-manager compiz-plugins compiz-plugins-default compiz-plugins-extra compiz-plugins-main ;
+
+}
+
+function install_simplenote18 {
+  snap install simplenote;
+}
+
+function install_virtualization18 {
+  # Qemu KVM
+  sudo apt install qemu-kvm libvirt-bin libvirt-clients libvirt-daemon-system bridge-utils virt-manager;
+  sudo adduser $USER libvirt;
+  sudo adduser $USER libvirt-qemu;
+}
+
+function hide_trashcan {
+  # hide the gnome desktop trashcan shortcut
+  gsettings set org.gnome.nautilus.desktop trash-icon-visible false
+}
+
+function sheepit18 {
+  preproutine;
+  sudo apt update;
+  installGit;
+  gitstuffdir;
+  move_preprep_to_gitstuff;
+  installbmenu;
+  install_vncserver;
+  install_openssh;
+  ssh_keygen;
+  install_javajre;
+  install_sheepit;
+  install_chromium18;
+  install_googlechrome18;
+  install_tmux18;
+  echo "preprep has completed!";
+  # ### autofire render ###
+  # cd ~/;
+  # SHEEPIT="$(printf "%s\n" sheep* | head -1)";
+  # java -jar $SHEEPIT -ui text -login howkj1 -password EjsndbGhL05UpZvPEgkoBcuBgNDlByEPQ8OtKJFg
+  # #######################
+}
+
+function config_extras {
+  # https://linuxconfig.org/things-to-do-after-installing-ubuntu-18-04-bionic-beaver-linux
+  sudo apt purge ubuntu-web-launchers;
+  sudo add-apt-repository multiverse;
+  sudo apt install steam;
+  sudo apt install nautilus-dropbox;
+  sudo apt install gnome-shell-extensions;
+  sudo apt install ubuntu-restricted-extras;
+
+}
+
+function fullyLoaded18 {
+
+  preproutine;
+
+  sudo apt update;
+  installGit;
+  gitstuffdir;
+  move_preprep_to_gitstuff;
+  installbmenu;
+
+  install_vncserver;
+  install_espeak;
+  install_dconf_editor;
+  install_redshift;
+  install_openssh;
+  ssh_keygen;
+  install_nautilus_image_manipulator;
+  install_pyrenamer;
+
+  install_blender;
+  install_javajre;
+  install_sheepit;
+
+  install_spotify18;
+  install_atom18;
+  install_chromium18;
+  install_googlechrome18;
+  install_slack18;
+  install_hangups18;
+  install_tmux18;
+  install_obs18;
+  install_discord18;
+  install_vlc18;
+  install_gimp18;
+  install_ora18;
+  install_lutris18;
+  install_compiztools18;
+  install_simplenote18;
+  install_virtualization18;
+
+  hide_trashcan;
+
+  echo "preprep has completed!";
+}
+
+
+
+function customize_menu18 {
+  RETVAL=$(whiptail --title "18.04 Custom Install Menu" \
+  --checklist --separate-output "Select all desired apps/settings to be installed:" 20 60 10 \
+  "1."  "sudo apt update"                    off \
+  "2."  "install Git"                        off \
+  "3."  "gitstuffdir"                        off \
+  "4."  "move preprep to gitstuff"           off \
+  "5."  "install bmenu"                      off \
+  "6."  "install vncserver"                  off \
+  "7."  "install espeak"                     off \
+  "8."  "install simplenote"                 off \
+  "9."  "install dconf_editor"               off \
+  "10." "install redshift"                   off \
+  "11." "install openssh"                    off \
+  "12." "install nautilus_image_manipulator" off \
+  "13." "install pyrenamer"                  off \
+  "14." "install blender"                    off \
+  "15." "install javajre"                    off \
+  "16." "install sheepit"                    off \
+  "17." "install spotify"                    off \
+  "18." "install atom"                       off \
+  "19." "install chromium"                   off \
+  "20." "install google chrome"              off \
+  "21." "install slack"                      off \
+  "22." "install hangups"                    off \
+  "23." "install tmux"                       off \
+  "24." "install obs"                        off \
+  "25." "install discord"                    off \
+  "26." "install vlc"                        off \
+  "27." "install gimp"                       off \
+  "28." "install ora"                        off \
+  "29." "install lutris"                     off \
+  "30." "install compiztools"                off \
+  "31." "install virtualization"             off \
+  "32." "ssh keygen"                         off \
+  "33." "hide trashcan"                      off \
+  3>&1 1>&2 2>&3)
+
+  # Below you can enter the corresponding commands
+  # http://www.gnu.org/software/bash/manual/bashref.html#Conditional-Constructs
+  # If the ‘;;’ operator is used, no subsequent matches are attempted after the first pattern match.
+  # Using ‘;&’ in place of ‘;;’ causes execution to continue with the command-list associated with the next clause, if any.
+  # Using ‘;;&’ in place of ‘;;’ causes the shell to test the patterns in the next clause, if any, and execute any associated command-list on a successful match.
+
+  for thing in $RETVAL
+    do
+    case $thing in
+        # 1.) echo "mac menu goes here"; whiptail --title "cutom menu" --msgbox "goes here" 10 50;;
+      1.)  sudo apt update;;
+      2.)  installGit;;
+      3.)  gitstuffdir;;
+      4.)  move_preprep_to_gitstuff;;
+      5.)  installbmenu;;
+      6.)  install_vncserver;;
+      7.)  install_espeak;;
+      8.)  ssh_keygen;;
+      9.)  install_dconf_editor;;
+      10.)  install_redshift;;
+      11.)  install_openssh;;
+      12.)  install_nautilus_image_manipulator;;
+      13.)  install_pyrenamer;;
+      14.)  install_blender;;
+      15.)  install_javajre;;
+      16.)  install_sheepit;;
+      17.)  install_spotify18;;
+      18.)  install_atom18;;
+      19.)  install_chromium18;;
+      10.)  install_googlechrome18;;
+      21.)  install_slack18;;
+      22.)  install_hangups18;;
+      23.)  install_tmux18;;
+      24.)  install_obs18;;
+      25.)  install_discord18;;
+      26.)  install_vlc18;;
+      27.)  install_gimp18;;
+      28.)  install_ora18;;
+      29.)  install_lutris18;;
+      20.)  install_compiztools18;;
+      31.)  install_simplenote18;;
+      32.)  install_virtualization18;;
+      33.)  hide_trashcan;;
+        *) echo "You have quit preprep.";
+    esac
+  done
+
+}
+
+
+###>>>> this format works for whiptail menus >>>>>
+function main_menu_1804 {
+
+  RETVAL=$(whiptail --title "Make a selection and Enter" \
+  --menu "Main Menu 18.04" 12 50 3 \
+  "1." "Custom Install menu -->" \
+  "2." "Dev Workstation" \
+  "3." "Render Station" \
+  3>&1 1>&2 2>&3)
+
+  # Below you can enter the corresponding commands
+
+  case $RETVAL in
+      # a) echo "custom menu goes here"; whiptail --title "cutom menu" --msgbox "goes here" 10 50;;
+      1.) customize_menu18;;
+      2.) fullyLoaded18;;
+      3.) sheepit18;;
+      *) echo "You have quit preprep."
+  esac
+  # c) echo "I Am The Machine!";;
+
+}
+###<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<

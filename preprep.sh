@@ -3,8 +3,6 @@
 # https://github.com/howkj1/preprep.git
 # preprep.sh installs the packages and preparations needed for the rest of deployment.
 
-# preprep depends on preprepfunctions.sh and macify.sh
-
 # bmenu or whiptail needs to set its script perms to +x
 # scripts then begin to run selection menus that drive installation of selections
 #
@@ -30,27 +28,65 @@ clear;
 
 ## begin magical code land ##
 
+export NEWT_COLORS='
+root=,black
+shadow=,black
+window=,black
+border=white,blue
+textbox=white,black
+button=white,magenta
+title=white,blue
+label=black,white
+actsellistbox=white,brown
+'
+
+
 ####    imports    ####
 prepDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
 
-## preprepfunctions.sh: ##
-. $prepDIR/preprepfunctions.sh --source-only;
-# installGit / preproutine / installbmenu
-# fix_locale
-# fullyAutomaticShotgun / customizeShotgun
+## preprep function dependencies: ##
+. $prepDIR/commonfunctions.lib --source-only;
+. $prepDIR/pfunctions1604.lib --source-only;
+. $prepDIR/pfunctions1804.lib --source-only;
 
 #### end of imports ####
 
-
 ##### Statements Below This Line Kicks Off The Whole Shebang! #####
+###>>>> whiptail menus >>>>>
+function main_menu {
 
+  RETVAL=$(whiptail --title "Make a selection and Enter" \
+  --menu "Main Menu" 12 50 3 \
+  "1." "Ubuntu 18.04 lts -->" \
+  "2." "Ubuntu 16.04 lts -->" \
+  "3." "RenderFarm -->" \
+  3>&1 1>&2 2>&3)
 
-if (whiptail --title "Preprep Begin" --yesno "Preprep is here to help! However, Preprep Assumes Ubuntu 16.04 w/ Unity desktop and comes witout warranty nor liability. Use at your own risk." --yes-button "Continue Preprep" --no-button "quit" 8 78)
+  # Below you can enter the corresponding commands
+
+  case $RETVAL in
+      # a) echo "custom menu goes here"; whiptail --title "cutom menu" --msgbox "goes here" 10 50;;
+      1.) main_menu_1804;;
+      2.) main_menu_1604;;
+      3.) $prepDIR/sheepfarm.sh;;
+       *) echo "Preprep has quit.";
+  esac
+  # c) echo "I Am The Machine!";;
+
+}
+###<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+#### Intro Info Menu + Disclaimer ####
+if (whiptail --title "Preprep Begin" --yesno \
+"                Preprep is here to help! \
+\nHowever, Preprep comes without warranty nor liability.\
+\n                  Use at your own risk." \
+ --yes-button "Continue Preprep"\
+ --no-button "quit" 10 60)
 then
   main_menu;
 else
   echo "You have quit preprep." # quits right away
 fi;
-
 ### end menu ###
 #########################
