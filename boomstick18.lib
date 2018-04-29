@@ -1,0 +1,129 @@
+#!/bin/bash
+
+# preprepfunctions is a helper for preprep.sh
+# preprepfunctions should be called from the preprep utilities
+# and is not meant to be a standalone script.
+#
+# git clone https://github.com/howkj1/preprep.git
+#
+
+## begin magical code land ##
+
+####    imports    ####
+prepDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
+
+# ## commonfunctiohs.lib ##
+. $prepDIR/preprepfunctions1804.lib --source-only;
+. $prepDIR/commonfunctions.lib --source-only;
+##
+
+#### end of imports ####
+
+
+
+
+function boomstick18 {
+
+  # preproutine;
+  echo;
+  echo -ne "starting preproutine... \r";
+  echo -ne 'here we go... \r';
+  sleep .5;
+  echo -ne 'here we go... ... \r';
+  sleep .5;
+  echo -ne 'here we go... ... ... \r';
+  sleep .5;
+  echo -ne 'here we go... ... ... ...\r';
+  echo -ne '\n';
+
+
+
+
+######### installers #########
+
+### keys ###
+
+# gitstuffdir;
+  echo -ne "...                                 \r";
+  echo -ne "making gitstuff folder... \r";sleep 1;
+  [ ! -d ~/gitstuff ] && mkdir ~/gitstuff;
+  echo -ne "opening gitstuff folder... \r"; sleep 1;
+  cd ~/gitstuff;
+
+  ver=$(lsb_release -sr); if [ $ver != "18.04" -a $ver != "17.10" -a $ver != "17.04" -a $ver != "16.04" ]; then ver=18.04; fi ;
+
+  echo "deb http://download.opensuse.org/repositories/home:/strycore/xUbuntu_$ver/ ./" | sudo tee /etc/apt/sources.list.d/lutris.list ;
+
+  wget -q http://download.opensuse.org/repositories/home:/strycore/xUbuntu_$ver/Release.key -O- | sudo apt-key add - ;
+
+
+
+### apts ###
+  sudp apt update;
+
+  sudo apt -y install \
+  git libncurses5-dev libncursesw5-dev tightvncserver espeak \
+  dconf-editor redshift redshift-gtk \
+  openssh-server nautilus-image-manipulator nautilus-image-converter \
+  pyrenamer blender blender-data openjdk-8-jre-headless gdebi-core \
+  compiz compiz-gnome compizconfig-settings-manager \
+  compiz-plugins compiz-plugins-default compiz-plugins-extra compiz-plugins-main \
+  qemu-kvm libvirt-bin libvirt-clients libvirt-daemon-system bridge-utils virt-manager \
+  lutris;
+
+
+### snaps ###
+  snap install \
+  spotify chromium-browser slack \
+  hangups tmux obs-studio discord vlc gimp ora \
+  simplenote;
+
+
+  snap install --classic atom;
+
+
+
+
+######### doers #########
+
+  echo "creating local preprep in ~/gitstuff/preprep/";
+  [ ! -d ~/gitstuff/preprep ] && cd ~/gitstuff && git clone https://github.com/howkj1/preprep.git;
+
+
+  # ssh_keygen;
+  your_email=$(whiptail --inputbox "Enter your full email address (yourname@gmail.com)" 8 78 email --title "SSH KeyGen" \
+  3>&1 1>&2 2>&3)
+  # A trick to swap stdout and stderr.
+  exitstatus=$?
+  if [ $exitstatus = 0 ]; then
+      echo "User selected Ok and entered " $your_email
+      ssh-keygen -t rsa -b 4096 -C $your_email
+      ssh-add ~/.ssh/id_rsa
+      sudo apt-get -qq -y install xclip
+      xclip -sel clip < ~/.ssh/id_rsa.pub
+  else
+      echo "User selected Cancel."
+  fi
+
+    sudo killall nautilus;
+
+    echo "";
+    echo -en "downloading sheepit render client\r";
+    [ ! -f ~/sheepit-client-*.jar ] && wget -P ~/ https://www.sheepit-renderfarm.com/media/applet/client-latest.php;
+    echo "sheepit client installed.                    ";
+
+    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb;
+    sudo gdebi google-chrome-stable_current_amd64.deb;
+    # cleanup
+    rm ./google-chrome-stable_current_amd64;
+
+    sudo adduser $USER libvirt;
+    sudo adduser $USER libvirt-qemu;
+
+    gsettings set org.gnome.nautilus.desktop trash-icon-visible false
+
+    echo "preprep boomstick18 has completed!";
+
+
+### end of boomstick18 function ###
+}

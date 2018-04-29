@@ -256,7 +256,7 @@ function customize_menu18 {
       5.)  installbmenu;;
       6.)  install_vncserver;;
       7.)  install_espeak;;
-      8.)  ssh_keygen;;
+      8.)  install_compiztools18;;
       9.)  install_dconf_editor;;
       10.)  install_redshift;;
       11.)  install_openssh;;
@@ -268,7 +268,7 @@ function customize_menu18 {
       17.)  install_spotify18;;
       18.)  install_atom18;;
       19.)  install_chromium18;;
-      10.)  install_googlechrome18;;
+      20.)  install_googlechrome18;;
       21.)  install_slack18;;
       22.)  install_hangups18;;
       23.)  install_tmux18;;
@@ -278,9 +278,9 @@ function customize_menu18 {
       27.)  install_gimp18;;
       28.)  install_ora18;;
       29.)  install_lutris18;;
-      20.)  install_compiztools18;;
-      31.)  install_simplenote18;;
-      32.)  install_virtualization18;;
+      30.)  install_simplenote18;;
+      31.)  install_virtualization18;;
+      32.)  ssh_keygen;;
       33.)  hide_trashcan;;
         *) echo "You have quit preprep.";
     esac
