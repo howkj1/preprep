@@ -59,7 +59,7 @@ function boomstick18 {
 
 
 ### apts ###
-  sudp apt update;
+  sudo apt update;
 
   sudo apt -y install \
   git libncurses5-dev libncursesw5-dev tightvncserver espeak \
