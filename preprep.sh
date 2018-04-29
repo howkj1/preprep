@@ -48,6 +48,7 @@ prepDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
 . $prepDIR/commonfunctions.lib --source-only;
 . $prepDIR/pfunctions1604.lib --source-only;
 . $prepDIR/pfunctions1804.lib --source-only;
+. $prepDIR/boomstick18.lib --source-only;
 
 #### end of imports ####
 

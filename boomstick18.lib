@@ -13,8 +13,8 @@
 prepDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
 
 # ## commonfunctiohs.lib ##
-. $prepDIR/preprepfunctions1804.lib --source-only;
-. $prepDIR/commonfunctions.lib --source-only;
+# . $prepDIR/preprepfunctions1804.lib --source-only;
+# . $prepDIR/commonfunctions.lib --source-only;
 ##
 
 #### end of imports ####

@@ -13,8 +13,8 @@
 prepDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
 
 # ## commonfunctiohs.lib ##
-# . $prepDIR/commonfunctions.lib --source-only;
 . $prepDIR/commonfunctions.lib --source-only;
+. $prepDIR/boomstick18.lib --source-only;
 ##
 
 #### end of imports ####
@@ -293,10 +293,11 @@ function customize_menu18 {
 function main_menu_1804 {
 
   RETVAL=$(whiptail --title "Make a selection and Enter" \
-  --menu "Main Menu 18.04" 12 50 3 \
+  --menu "Main Menu 18.04" 12 50 4 \
   "1." "Custom Install menu -->" \
   "2." "Dev Workstation" \
   "3." "Render Station" \
+  "4." "BoomStick Automation" \
   3>&1 1>&2 2>&3)
 
   # Below you can enter the corresponding commands
@@ -306,6 +307,7 @@ function main_menu_1804 {
       1.) customize_menu18;;
       2.) fullyLoaded18;;
       3.) sheepit18;;
+      4.) boomstick18;;
       *) echo "You have quit preprep."
   esac
   # c) echo "I Am The Machine!";;
