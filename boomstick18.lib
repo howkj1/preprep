@@ -27,9 +27,9 @@ function boomstick18 {
   # preproutine;
   echo;
   echo -ne "starting preproutine... \r";
-  echo -ne 'here we go... \r';
+  echo -ne 'here we go...          \r';
   sleep .5;
-  echo -ne 'here we go... ... \r';
+  echo -ne 'here we go... ...     \r';
   sleep .5;
   echo -ne 'here we go... ... ... \r';
   sleep .5;
@@ -56,30 +56,29 @@ function boomstick18 {
 
   wget -q http://download.opensuse.org/repositories/home:/strycore/xUbuntu_$ver/Release.key -O- | sudo apt-key add - ;
 
+  # Google Chrome - stable -
+  wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+  echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
 
 
 ### apts ###
   sudo apt update;
 
-  sudo apt -y install \
-  git libncurses5-dev libncursesw5-dev tightvncserver espeak \
-  dconf-editor redshift redshift-gtk \
-  openssh-server nautilus-image-manipulator nautilus-image-converter \
-  pyrenamer blender blender-data openjdk-8-jre-headless gdebi-core \
-  compiz compiz-gnome compizconfig-settings-manager \
-  compiz-plugins compiz-plugins-default compiz-plugins-extra compiz-plugins-main \
-  qemu-kvm libvirt-bin libvirt-clients libvirt-daemon-system bridge-utils virt-manager \
-  lutris;
+  sudo apt-get -y -qq install git snapd libncurses5-dev libncursesw5-dev tightvncserver espeak dconf-editor redshift redshift-gtk openssh-server blender blender-data openjdk-8-jre-headless google-chrome-stable compiz compiz-gnome compizconfig-settings-manager compiz-plugins compiz-plugins-default compiz-plugins-extra compiz-plugins-main qemu-kvm libvirt-bin libvirt-clients libvirt-daemon-system bridge-utils virt-manager lutris;
 
 
 ### snaps ###
-  snap install \
-  spotify chromium-browser slack \
-  hangups tmux obs-studio discord vlc gimp ora \
-  simplenote;
+  echo;
+  echo "enter your snap login credentials:";
+  sudo snap login;
 
+  snap install spotify chromium hangups obs-studio discord vlc gimp ora simplenote;
 
+  snap install --classic slack;
+  snap install --classic tmux;
   snap install --classic atom;
+
+  snap logout;
 
 
 
@@ -90,20 +89,20 @@ function boomstick18 {
   [ ! -d ~/gitstuff/preprep ] && cd ~/gitstuff && git clone https://github.com/howkj1/preprep.git;
 
 
-  # ssh_keygen;
-  your_email=$(whiptail --inputbox "Enter your full email address (yourname@gmail.com)" 8 78 email --title "SSH KeyGen" \
-  3>&1 1>&2 2>&3)
-  # A trick to swap stdout and stderr.
-  exitstatus=$?
-  if [ $exitstatus = 0 ]; then
-      echo "User selected Ok and entered " $your_email
-      ssh-keygen -t rsa -b 4096 -C $your_email
-      ssh-add ~/.ssh/id_rsa
-      sudo apt-get -qq -y install xclip
-      xclip -sel clip < ~/.ssh/id_rsa.pub
-  else
-      echo "User selected Cancel."
-  fi
+  # # ssh_keygen;
+  # your_email=$(whiptail --inputbox "Enter your full email address (yourname@gmail.com)" 8 78 email --title "SSH KeyGen" \
+  # 3>&1 1>&2 2>&3)
+  # # A trick to swap stdout and stderr.
+  # exitstatus=$?
+  # if [ $exitstatus = 0 ]; then
+  #     echo "User selected Ok and entered " $your_email
+  #     ssh-keygen -t rsa -b 4096 -C $your_email
+  #     ssh-add ~/.ssh/id_rsa
+  #     sudo apt-get -qq -y install xclip
+  #     xclip -sel clip < ~/.ssh/id_rsa.pub
+  # else
+  #     echo "User selected Cancel."
+  # fi
 
     sudo killall nautilus;
 
@@ -111,11 +110,6 @@ function boomstick18 {
     echo -en "downloading sheepit render client\r";
     [ ! -f ~/sheepit-client-*.jar ] && wget -P ~/ https://www.sheepit-renderfarm.com/media/applet/client-latest.php;
     echo "sheepit client installed.                    ";
-
-    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb;
-    sudo gdebi google-chrome-stable_current_amd64.deb;
-    # cleanup
-    rm ./google-chrome-stable_current_amd64;
 
     sudo adduser $USER libvirt;
     sudo adduser $USER libvirt-qemu;
