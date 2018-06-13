@@ -74,9 +74,9 @@ function main_sheep_menu {
   # visible menu options:
   RETVAL=$(whiptail --title "Make a selection and Enter" \
   --menu "Main Menu" 12 50 4 \
-  "1." "Begin Rendering -->" \
+  "1." "Build Rendering Machine -->" \
   "2." "Update to latest SheepIt -->" \
-  "3." "Install SheepIt -->" \
+  "3." "Download Latest SheepIt -->" \
   "4." "Quit" \
   3>&1 1>&2 2>&3)
 
