@@ -57,7 +57,7 @@ function update_sheepit {
   # sheepit render farm client
   echo "";
   echo -en "downloading latest sheepit render client\r";
-  wget -P ~/ https://www.sheepit-renderfarm.com/media/applet/sheepit-client-5.606.2884.jar;
+  wget -P ~/ https://www.sheepit-renderfarm.com/media/applet/sheepit-client-5.613.2885.jar;
   # wget -P ~/ https://www.sheepit-renderfarm.com/media/applet/client-latest.php;
   echo "latest sheepit client installed.                    ";
 }
@@ -76,7 +76,7 @@ function main_sheep_menu {
   RETVAL=$(whiptail --title "Make a selection and Enter" \
   --menu "Main Menu" 12 50 4 \
   "1." "Build Rendering Machine -->" \
-  "2." "Update to latest SheepIt -->" \
+  "2." "Run the latest SheepIt -->" \
   "3." "Download Latest SheepIt -->" \
   "4." "Quit" \
   3>&1 1>&2 2>&3)
