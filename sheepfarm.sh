@@ -65,6 +65,9 @@ function update_sheepit {
 function farm_sheep {
   ### autofire render agent ###
   cd ~/;
+  [! -d ~/old-sheepits] && mkdir ~/old-sheepit;
+  mv ~/sheepit-client-* ~/old-sheepit/;
+  update_sheepit;
   SHEEPIT="$(printf "%s\n" sheep* | head -1)";
   echo "I Am The Machine!";
   java -jar $SHEEPIT -ui text -login howkj1 -password EjsndbGhL05UpZvPEgkoBcuBgNDlByEPQ8OtKJFg
