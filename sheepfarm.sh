@@ -65,7 +65,7 @@ function update_sheepit {
 function farm_sheep {
   ### autofire render agent ###
   cd ~/;
-  [! -d ~/old-sheepit] && mkdir ~/old-sheepit;
+  mkdir ~/old-sheepit;
   mv ~/sheepit-client* ~/old-sheepit/;
   update_sheepit;
   SHEEPIT="$(printf "%s\n" sheep* | head -1)";
