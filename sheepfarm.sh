@@ -66,7 +66,7 @@ function farm_sheep {
   ### autofire render agent ###
   cd ~/;
   [! -d ~/old-sheepits] && mkdir ~/old-sheepit;
-  mv ~/sheepit-client-* ~/old-sheepit/;
+  mv ~/sheepit-client* ~/old-sheepit/;
   update_sheepit;
   SHEEPIT="$(printf "%s\n" sheep* | head -1)";
   echo "I Am The Machine!";
