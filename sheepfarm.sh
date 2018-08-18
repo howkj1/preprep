@@ -57,7 +57,7 @@ function update_sheepit {
   # sheepit render farm client
   echo "";
   echo -en "downloading latest sheepit render client\r";
-  wget -P ~/ https://www.sheepit-renderfarm.com/media/applet/sheepit-client-5.620.2885.jar;
+  wget -P ~/ https://www.sheepit-renderfarm.com/media/applet/sheepit-client-5.658.2896.jar;
   # wget -P ~/ https://www.sheepit-renderfarm.com/media/applet/client-latest.php;
   echo "latest sheepit client installed.                    ";
 }
