@@ -57,7 +57,7 @@ function update_sheepit {
   # sheepit render farm client
   echo "";
   echo -en "downloading latest sheepit render client\r";
-  wget -p ~/ https://sheepit-renderfarm.com/media/applet/client-latest.php -O sheepit-latest.jar
+  wget https://sheepit-renderfarm.com/media/applet/client-latest.php -O sheepit-latest.jar
   #wget -P ~/ https://www.sheepit-renderfarm.com/media/applet/sheepit-client-5.658.2896.jar;
   # wget -P ~/ https://www.sheepit-renderfarm.com/media/applet/client-latest.php;
   echo "latest sheepit client installed.                    ";
@@ -66,8 +66,8 @@ function update_sheepit {
 function farm_sheep {
   ### autofire render agent ###
   cd ~/;
-  mkdir ~/old-sheepit;
-  mv ~/sheepit-client* ~/old-sheepit/;
+  # mkdir ~/old-sheepit;
+  # mv ~/sheepit-client* ~/old-sheepit/;
   update_sheepit;
   SHEEPIT="$(printf "%s\n" sheep* | head -1)";
   echo "I Am The Machine!";
