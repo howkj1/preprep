@@ -57,20 +57,11 @@ function update_sheepit {
   # sheepit render farm client
   echo "";
   echo -en "downloading latest sheepit render client\r";
-  wget --no-check-certificate https://www.sheepit-renderfarm.com/media/applet/sheepit-client-5.1275.2959.jar -O sheepit-latest.jar
+  wget --no-check-certificate https://sheepit-renderfarm.com/media/applet/client-latest.php -O sheepit-latest.jar
   #wget -P ~/ https://www.sheepit-renderfarm.com/media/applet/sheepit-client-5.658.2896.jar;
   # wget -P ~/ https://www.sheepit-renderfarm.com/media/applet/client-latest.php;
   echo "latest sheepit client installed.                    ";
 }
-# function update_sheepit {
-#   # sheepit render farm client
-#   echo "";
-#   echo -en "downloading latest sheepit render client\r";
-#   wget --no-check-certificate https://sheepit-renderfarm.com/media/applet/client-latest.php -O sheepit-latest.jar
-#   #wget -P ~/ https://www.sheepit-renderfarm.com/media/applet/sheepit-client-5.658.2896.jar;
-#   # wget -P ~/ https://www.sheepit-renderfarm.com/media/applet/client-latest.php;
-#   echo "latest sheepit client installed.                    ";
-# }
 
 function farm_sheep {
   ### autofire render agent ###
@@ -78,7 +69,8 @@ function farm_sheep {
   # mkdir ~/old-sheepit;
   # mv ~/sheepit-client* ~/old-sheepit/;
   update_sheepit;
-  SHEEPIT="$(printf "%s\n" sheep* | head -1)";
+  # SHEEPIT="$(printf "%s\n" sheep* | head -1)";
+  SHEEPIT="$(printf "%s\n" sheepit-latest.jar)";
   echo "I Am The Machine!";
   java -jar $SHEEPIT -ui text -login howkj1 -password EjsndbGhL05UpZvPEgkoBcuBgNDlByEPQ8OtKJFg
   #######################
