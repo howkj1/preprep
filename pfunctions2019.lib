@@ -1,0 +1,259 @@
+#!/bin/bash
+
+# preprepfunctions is a helper for preprep.sh
+# preprepfunctions should be called from the preprep utilities
+# and is not meant to be a standalone script.
+#
+# git clone https://github.com/howkj1/preprep.git
+#
+
+## begin magical code land ##
+
+####    imports    ####
+prepDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
+
+# ## commonfunctiohs.lib ##
+. $prepDIR/commonfunctions.lib --source-only;
+##
+#### end of imports ####
+
+
+### main variables ###
+aptvars="";
+snapvars="";
+snapclassicvars="";
+### end of main vars ###
+
+function install_spotify19 {
+  # Spotify music player
+  # https://www.spotify.com
+  snapvars+=" spotify";
+}
+
+function install_atom19 {
+  # http://tipsonubuntu.com/2016/08/05/install-atom-text-editor-ubuntu-16-04/
+  # https://github.com/atom/atom
+  # https://atom.io/
+  # snap install --classic atom;
+  snapclassicvars+=" atom";
+}
+
+function install_chromium19 {
+  # chromium open source browser
+  snapvars+=" chromium-browser";
+}
+
+function install_googlechrome19 {
+  # Google Chrome
+  sudo apt install gdebi-core;
+  wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb;
+  sudo gdebi google-chrome-stable_current_amd64.deb;
+  # cleanup
+  rm ./google-chrome-stable_current_amd64;
+}
+
+function install_slack19 {
+  # slack chat messenger
+  snapvars+=" slack";
+}
+
+function install_hangups19 {
+  # hangups = google hangouts for cli terminals
+  snapvars+=" hangups";
+}
+
+function install_tmux19 {
+  #install tmux
+  snapvars+=" tmux";
+}
+
+function install_obs19 {
+  #install obs studio
+  snapvars+=" obs-studio";
+}
+
+function install_discord19 {
+  #install discord chat
+  snapvars+=" discord";
+}
+
+function install_vlc19 {
+  #vlc media player
+  snapvars+=" vlc";
+}
+
+function install_gimp19 {
+  #gimp
+  snapvars+=" gimp";
+}
+
+function install_ora19 {
+  #ora task manager
+  snapvars+=" ora";
+}
+
+function install_lutris19 {
+  # Lutris game manager
+  ver=$(lsb_release -sr); if [ $ver != "18.04" -a $ver != "17.10" -a $ver != "17.04" -a $ver != "16.04" ]; then ver=18.04; fi ;
+
+  echo "deb http://download.opensuse.org/repositories/home:/strycore/xUbuntu_$ver/ ./" | sudo tee /etc/apt/sources.list.d/lutris.list ;
+
+  wget -q http://download.opensuse.org/repositories/home:/strycore/xUbuntu_$ver/Release.key -O- | sudo apt-key add - ;
+
+  sudo apt update;
+  aptvars+=" lutris";
+}
+
+function install_compiztools19 {
+  # compiz tools
+  aptvars+=" compiz compiz-gnome compizconfig-settings-manager compiz-plugins compiz-plugins-default compiz-plugins-extra compiz-plugins-main" ;
+
+}
+
+function install_simplenote19 {
+  snapvars+=" simplenote";
+}
+
+function install_virtualization19 {
+  # Qemu KVM
+  aptvars+=" install qemu-kvm libvirt-bin libvirt-clients libvirt-daemon-system bridge-utils virt-manager";
+  sudo adduser $USER libvirt;
+  sudo adduser $USER libvirt-qemu;
+}
+
+function hide_trashcan19 {
+  # hide the gnome desktop trashcan shortcut
+  gsettings set org.gnome.nautilus.desktop trash-icon-visible false
+}
+
+function install_steam19 {
+  aptvars+=" steam";
+}
+
+function bionic_cleanup19 {
+  # https://linuxconfig.org/things-to-do-after-installing-ubuntu-18-04-bionic-beaver-linux
+  sudo apt purge ubuntu-web-launchers;
+  sudo add-apt-repository multiverse;
+  aptvars+=" nautilus-dropbox";
+  aptvars+=" gnome-shell-extensions";
+  aptvars+=" ubuntu-restricted-extras";
+}
+
+function customize_menu2019 {
+  RETVAL=$(whiptail --title "Custom Install Menu" \
+  --checklist --separate-output "Select all desired apps/settings to be installed:" 20 60 10 \
+  "1."  "sudo apt update"                    on \
+  "2."  "install Git"                        off \
+  "3."  "gitstuffdir"                        off \
+  "4."  "move preprep to gitstuff"           off \
+  "5."  "bionic cleanup"                     on \
+  "6."  "install vncserver"                  off \
+  "7."  "install espeak"                     off \
+  "8."  "install simplenote"                 off \
+  "9."  "install dconf_editor"               off \
+  "10." "install redshift"                   off \
+  "11." "install openssh"                    off \
+  "12." "install nautilus_image_manipulator" off \
+  "13." "install pyrenamer"                  off \
+  "14." "install blender"                    off \
+  "15." "install javajre"                    off \
+  "16." "install sheepit"                    off \
+  "17." "install spotify"                    off \
+  "18." "install atom"                       off \
+  "19." "install chromium"                   off \
+  "20." "install google chrome"              off \
+  "21." "install slack"                      off \
+  "22." "install hangups"                    off \
+  "23." "install tmux"                       off \
+  "24." "install obs"                        off \
+  "25." "install discord"                    off \
+  "26." "install vlc"                        off \
+  "27." "install gimp"                       off \
+  "28." "install ora"                        off \
+  "29." "install lutris"                     off \
+  "30." "install compiztools"                off \
+  "31." "install virtualization"             off \
+  "32." "ssh keygen"                         off \
+  "33." "hide trashcan"                      off \
+  "34." "install bmenu"                      off \
+  3>&1 1>&2 2>&3)
+
+  # Below you can enter the corresponding commands
+  # http://www.gnu.org/software/bash/manual/bashref.html#Conditional-Constructs
+  # If the ‘;;’ operator is used, no subsequent matches are attempted after the first pattern match.
+  # Using ‘;&’ in place of ‘;;’ causes execution to continue with the command-list associated with the next clause, if any.
+  # Using ‘;;&’ in place of ‘;;’ causes the shell to test the patterns in the next clause, if any, and execute any associated command-list on a successful match.
+
+  for thing in $RETVAL
+    do
+    case $thing in
+        # 1.) echo "mac menu goes here"; whiptail --title "cutom menu" --msgbox "goes here" 10 50;;
+      1.)  sudo apt update;;
+      2.)  installGit;;
+      3.)  gitstuffdir;;
+      4.)  move_preprep_to_gitstuff;;
+      5.)  bionic_cleanup19;;
+      6.)  install_vncserver;;
+      7.)  install_espeak;;
+      8.)  install_compiztools19;;
+      9.)  install_dconf_editor;;
+      10.)  install_redshift;;
+      11.)  install_openssh;;
+      12.)  install_nautilus_image_manipulator;;
+      13.)  install_pyrenamer;;
+      14.)  install_blender;;
+      15.)  install_javajre;;
+      16.)  install_sheepit;;
+      17.)  install_spotify19;;
+      18.)  install_atom19;;
+      19.)  install_chromium19;;
+      20.)  install_googlechrome19;;
+      21.)  install_slack19;;
+      22.)  install_hangups19;;
+      23.)  install_tmux19;;
+      24.)  install_obs19;;
+      25.)  install_discord19;;
+      26.)  install_vlc19;;
+      27.)  install_gimp19;;
+      28.)  install_ora19;;
+      29.)  install_lutris19;;
+      30.)  install_simplenote19;;
+      31.)  install_virtualization19;;
+      32.)  ssh_keygen19;;
+      33.)  hide_trashcan19;;
+      34.)  installbmenu;;
+        *) echo "You have quit preprep.";
+    esac
+  done
+
+  # echo $aptvars;
+  # aptvars+=" train train train";
+  # echo $aptvars;
+  # echo "$aptvars";
+  [ ! -z "$aptvars" ] && sudo apt install $aptvars || echo "no apts selected";
+  [ ! -z "$snapvars" ] && snap install $snapvars || echo "no snaps selected";
+  [ ! -z "$snapclassicvars" ] && snap install --classic $snapclassicvars || echo "no classic snaps selected";
+}
+
+
+###>>>> this format works for whiptail menus >>>>>
+function main_menu_2019 {
+
+  RETVAL=$(whiptail --title "Make a selection and Enter" \
+  --menu "Main Menu 2019" 12 50 4 \
+  "1." "Custom Install menu -->" \
+  "2." "Render Station" \
+  3>&1 1>&2 2>&3)
+
+  # Below you can enter the corresponding commands
+
+  case $RETVAL in
+      # a) echo "custom menu goes here"; whiptail --title "cutom menu" --msgbox "goes here" 10 50;;
+      1.) customize_menu2019;;
+      2.) sheepit18;;
+      *) echo "You have quit preprep."
+  esac
+  # c) echo "I Am The Machine!";;
+
+}
+###<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
