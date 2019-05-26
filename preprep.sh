@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # https://github.com/howkj1/preprep.git
-# preprep.sh 
+# preprep.sh
 
 ## clear screen
 clear;
@@ -26,8 +26,8 @@ prepDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
 
 ## preprep function dependencies: ##
 . $prepDIR/commonfunctions.lib --source-only;
-. $prepDIR/pfunctions1604.lib --source-only;
-. $prepDIR/pfunctions1804.lib --source-only;
+# . $prepDIR/pfunctions1604.lib --source-only;
+# . $prepDIR/pfunctions1804.lib --source-only;
 . $prepDIR/pfunctions2019.lib --source-only;
 
 
@@ -39,10 +39,7 @@ function main_menu {
 
   RETVAL=$(whiptail --title "Make a selection and Enter" \
   --menu "Main Menu" 12 50 3 \
-  "1." "Ubuntu 2019      -->" \
-  "2." "Ubuntu 18.04 lts -->" \
-  "3." "Ubuntu 16.04 lts -->" \
-  "4." "RenderFarm       -->" \
+  "1." "Ubuntu 18.04 v2019      -->" \
   3>&1 1>&2 2>&3)
 
   # Below you can enter the corresponding commands
@@ -50,9 +47,6 @@ function main_menu {
   case $RETVAL in
       # a) echo "custom menu goes here"; whiptail --title "cutom menu" --msgbox "goes here" 10 50;;
       1.) main_menu_2019;;
-      2.) main_menu_1804;;
-      3.) main_menu_1604;;
-      4.) $prepDIR/sheepfarm.sh;;
        *) echo "Preprep has quit.";
   esac
   # c) echo "I Am The Machine!";;

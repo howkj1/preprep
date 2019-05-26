@@ -251,7 +251,6 @@ function main_menu_2019 {
   RETVAL=$(whiptail --title "Make a selection and Enter" \
   --menu "Main Menu 2019" 12 50 4 \
   "1." "Custom Install menu -->" \
-  "2." "Render Station" \
   3>&1 1>&2 2>&3)
 
   # Below you can enter the corresponding commands
@@ -259,7 +258,6 @@ function main_menu_2019 {
   case $RETVAL in
       # a) echo "custom menu goes here"; whiptail --title "cutom menu" --msgbox "goes here" 10 50;;
       1.) customize_menu2019;;
-      2.) sheepit18;;
       *) echo "You have quit preprep."
   esac
   # c) echo "I Am The Machine!";;
