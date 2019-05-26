@@ -130,6 +130,13 @@ function install_steam19 {
   aptvars+=" steam";
 }
 
+function install_sheepitfarm {
+  # moves, copies, or clones preprep scripts and deps into ~/gitstuff/preprep/
+  echo "creating local sheepitfarm in ~/gitstuff/sheepitfarm/";
+  # gitstuffdir;
+  [ ! -d ~/gitstuff/sheepitfarm ] && cd ~/gitstuff && git clone https://github.com/howkj1/sheepitfarm.git;
+}
+
 function bionic_cleanup19 {
   # https://linuxconfig.org/things-to-do-after-installing-ubuntu-18-04-bionic-beaver-linux
   sudo apt purge ubuntu-web-launchers;
@@ -147,35 +154,36 @@ function customize_menu2019 {
   "3."  "gitstuffdir"                        off \
   "4."  "move preprep to gitstuff"           off \
   "5."  "bionic cleanup"                     on \
-  "6."  "install vncserver"                  off \
-  "7."  "install espeak"                     off \
-  "8."  "install simplenote"                 off \
-  "9."  "install dconf_editor"               off \
-  "10." "install redshift"                   off \
-  "11." "install openssh"                    off \
-  "12." "install nautilus_image_manipulator" off \
-  "13." "install pyrenamer"                  off \
-  "14." "install blender"                    off \
-  "15." "install javajre"                    off \
-  "16." "install sheepit"                    off \
-  "17." "install spotify"                    off \
-  "18." "install atom"                       off \
-  "19." "install chromium"                   off \
-  "20." "install google chrome"              off \
-  "21." "install slack"                      off \
-  "22." "install hangups"                    off \
-  "23." "install tmux"                       off \
-  "24." "install obs"                        off \
-  "25." "install discord"                    off \
-  "26." "install vlc"                        off \
-  "27." "install gimp"                       off \
-  "28." "install ora"                        off \
-  "29." "install lutris"                     off \
-  "30." "install compiztools"                off \
-  "31." "install virtualization"             off \
-  "32." "ssh keygen"                         off \
-  "33." "hide trashcan"                      off \
-  "34." "install bmenu"                      off \
+  "6." "install sheepitfarm"                on \
+  "7."  "install vncserver"                  off \
+  "8."  "install espeak"                     off \
+  "9."  "install simplenote"                 off \
+  "10."  "install dconf_editor"               off \
+  "11." "install redshift"                   off \
+  "12." "install openssh"                    off \
+  "13." "install nautilus_image_manipulator" off \
+  "14." "install pyrenamer"                  off \
+  "15." "install blender"                    off \
+  "16." "install javajre"                    off \
+  "17." "install sheepit"                    off \
+  "18." "install spotify"                    off \
+  "19." "install atom"                       off \
+  "20." "install chromium"                   off \
+  "21." "install google chrome"              off \
+  "22." "install slack"                      off \
+  "23." "install hangups"                    off \
+  "24." "install tmux"                       off \
+  "25." "install obs"                        off \
+  "26." "install discord"                    off \
+  "27." "install vlc"                        off \
+  "28." "install gimp"                       off \
+  "29." "install ora"                        off \
+  "30." "install lutris"                     off \
+  "31." "install compiztools"                off \
+  "32." "install virtualization"             off \
+  "33." "ssh keygen"                         off \
+  "34." "hide trashcan"                      off \
+  "35." "install bmenu"                      off \
   3>&1 1>&2 2>&3)
 
   # Below you can enter the corresponding commands
@@ -193,35 +201,36 @@ function customize_menu2019 {
       3.)  gitstuffdir;;
       4.)  move_preprep_to_gitstuff;;
       5.)  bionic_cleanup19;;
-      6.)  install_vncserver;;
-      7.)  install_espeak;;
-      8.)  install_compiztools19;;
-      9.)  install_dconf_editor;;
-      10.)  install_redshift;;
-      11.)  install_openssh;;
-      12.)  install_nautilus_image_manipulator;;
-      13.)  install_pyrenamer;;
-      14.)  install_blender;;
-      15.)  install_javajre;;
-      16.)  install_sheepit;;
-      17.)  install_spotify19;;
-      18.)  install_atom19;;
-      19.)  install_chromium19;;
-      20.)  install_googlechrome19;;
-      21.)  install_slack19;;
-      22.)  install_hangups19;;
-      23.)  install_tmux19;;
-      24.)  install_obs19;;
-      25.)  install_discord19;;
-      26.)  install_vlc19;;
-      27.)  install_gimp19;;
-      28.)  install_ora19;;
-      29.)  install_lutris19;;
-      30.)  install_simplenote19;;
-      31.)  install_virtualization19;;
-      32.)  ssh_keygen19;;
-      33.)  hide_trashcan19;;
-      34.)  installbmenu;;
+      6.)  install_sheepitfarm;;
+      7.)  install_vncserver;;
+      8.)  install_espeak;;
+      9.)  install_compiztools19;;
+      10.)  install_dconf_editor;;
+      11.)  install_redshift;;
+      12.)  install_openssh;;
+      13.)  install_nautilus_image_manipulator;;
+      14.)  install_pyrenamer;;
+      15.)  install_blender;;
+      16.)  install_javajre;;
+      17.)  install_sheepit;;
+      18.)  install_spotify19;;
+      19.)  install_atom19;;
+      20.)  install_chromium19;;
+      21.)  install_googlechrome19;;
+      22.)  install_slack19;;
+      23.)  install_hangups19;;
+      24.)  install_tmux19;;
+      25.)  install_obs19;;
+      26.)  install_discord19;;
+      27.)  install_vlc19;;
+      28.)  install_gimp19;;
+      29.)  install_ora19;;
+      30.)  install_lutris19;;
+      31.)  install_simplenote19;;
+      32.)  install_virtualization19;;
+      33.)  ssh_keygen19;;
+      34.)  hide_trashcan19;;
+      35.)  installbmenu;;
         *) echo "You have quit preprep.";
     esac
   done

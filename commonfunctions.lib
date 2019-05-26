@@ -203,11 +203,3 @@ function preproutine {
   # echo;
   # echo "Preprep has finished!";
 }
-
-# main menu
-  # custom
-  # repair
-    ##--> checkbox menu
-      ###--> macify sub checkbox menu? (or just show all?)
-  # auto # TODO whiptail progress bar for auto.
-  # quit

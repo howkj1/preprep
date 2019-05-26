@@ -1,27 +1,7 @@
 #!/bin/bash
 
 # https://github.com/howkj1/preprep.git
-# preprep.sh installs the packages and preparations needed for the rest of deployment.
-
-# bmenu or whiptail needs to set its script perms to +x
-# scripts then begin to run selection menus that drive installation of selections
-#
-# test files and directories
-# http://tecadmin.net/bash-shell-test-if-file-or-directory-exists/#
-#
-# whiptail
-# https://en.wikibooks.org/wiki/Bash_Shell_Scripting/Whiptail
-
-### Stuff below this line should be converted to whiptail or other clui ###
-
-# Here's how to import additional functions :
-#. ./filename.sh --source-only
-
-## Cheatsheet:
-## A; B    Run A and then B, regardless of success of A
-## A && B  Run B if A succeeded
-## A || B  Run B if A failed
-## A &     Run A in background.
+# preprep.sh 
 
 ## clear screen
 clear;
